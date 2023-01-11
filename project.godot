@@ -12,6 +12,7 @@ config_version=4
 
 config/name="GATT"
 config/description="Godot Autotile Texture Templater (GATT)"
+run/main_scene="res://main.tscn"
 config/icon="res://icon.png"
 
 [display]
