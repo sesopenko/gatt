@@ -8,7 +8,7 @@
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
-final_image_display_path = NodePath("VBoxContainer/VBoxContainer/ScrollContainer/FinalImage")
+final_image_display_path = NodePath("VBoxContainer/FinalImageContainer/ScrollContainer/FinalImage")
 
 [node name="SaveDialog" parent="." instance=ExtResource( 3 )]
 
@@ -130,19 +130,19 @@ mouse_default_cursor_shape = 2
 size_flags_horizontal = 3
 text = "Generate 2x2"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer"]
+[node name="FinalImageContainer" type="VBoxContainer" parent="VBoxContainer"]
 margin_top = 194.0
 margin_right = 706.0
 margin_bottom = 536.0
 grow_horizontal = 2
 
-[node name="FinalLabel" type="Label" parent="VBoxContainer/VBoxContainer"]
+[node name="FinalLabel" type="Label" parent="VBoxContainer/FinalImageContainer"]
 margin_right = 706.0
 margin_bottom = 14.0
 text = "Rendered Autotile Template"
 align = 1
 
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/FinalImageContainer"]
 margin_top = 18.0
 margin_right = 706.0
 margin_bottom = 318.0
@@ -152,7 +152,7 @@ rect_min_size = Vector2( 600, 300 )
 size_flags_horizontal = 3
 size_flags_vertical = 12
 
-[node name="FinalImage" type="TextureRect" parent="VBoxContainer/VBoxContainer/ScrollContainer"]
+[node name="FinalImage" type="TextureRect" parent="VBoxContainer/FinalImageContainer/ScrollContainer"]
 margin_right = 256.0
 margin_bottom = 256.0
 rect_min_size = Vector2( 256, 256 )
@@ -160,7 +160,7 @@ size_flags_horizontal = 2
 size_flags_vertical = 0
 texture = ExtResource( 2 )
 
-[node name="SaveButton" type="Button" parent="VBoxContainer/VBoxContainer"]
+[node name="SaveButton" type="Button" parent="VBoxContainer/FinalImageContainer"]
 margin_top = 322.0
 margin_right = 706.0
 margin_bottom = 342.0
@@ -168,4 +168,4 @@ text = "Save Template File"
 
 [connection signal="file_selected" from="SaveDialog" to="." method="_on_SaveDialog_file_selected"]
 [connection signal="pressed" from="VBoxContainer/GenerateButton" to="." method="generate_and_display_2x2"]
-[connection signal="pressed" from="VBoxContainer/VBoxContainer/SaveButton" to="." method="_on_SaveButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/FinalImageContainer/SaveButton" to="." method="_on_SaveButton_pressed"]

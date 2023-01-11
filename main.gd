@@ -134,10 +134,20 @@ func get_dimensions_2x2()->Vector2:
 func _on_ErrorPopupCloseButton_pressed():
 	$ErrorPopup.hide()
 
-
 func _on_SaveButton_pressed():
 	$SaveDialog.popup_centered_clamped()
 
 
 func _on_SaveDialog_file_selected(path):
-	_rendered_template.save_png(path)
+	var err := _rendered_template.save_png(path)
+	var dialog := AcceptDialog.new()
+	dialog.connect("modal_closed", dialog, "queue_free")
+	if err != OK:
+		dialog.window_title = "Error saving file"
+		dialog.dialog_text = "Error saving file"
+	else:
+		dialog.window_title = "Saved File"
+		dialog.dialog_text = "File Saved Successfully"
+	add_child(dialog)
+	dialog.popup_centered()
+	
