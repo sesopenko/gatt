@@ -1,0 +1,18 @@
+###############################
+# Git Line Endings            #
+###############################
+
+# Set default behaviour to automatically normalize line endings.
+
+* text=auto
+
+*.gd text eol=lf
+*.godot eol=lf
+*.jpg
+*.tres eol=lf
+*.tscn eol=lf
+*.json eol=lf
+
+# Denote all files that are truly binary and should not be modified.
+*.png binary
+*.jpg binary
