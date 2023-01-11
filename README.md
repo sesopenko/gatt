@@ -2,6 +2,10 @@
 
 The autotile templates provided with the official godot documentation on [Autotiles](https://docs.godotengine.org/en/stable/tutorials/2d/using_tilemaps.html#autotiles) aren't easy to use because the guide lines have been baked into each tile, requiring lots of editing using a graphics program (such as gimp).  Godot Autotile Texture Templater (GATT) solves this problem by generating templates for use in autotiles.
 
+## Download
+
+[Download the releases of the tool from itch.io (currently only Windows)](https://sesopenko.itch.io/gatt)
+
 ## Relevant Documentation
 
 * [Godot Autotiles](https://docs.godotengine.org/en/stable/tutorials/2d/using_tilemaps.html#autotiles)
