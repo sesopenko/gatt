@@ -133,3 +133,11 @@ func get_dimensions_2x2()->Vector2:
 
 func _on_ErrorPopupCloseButton_pressed():
 	$ErrorPopup.hide()
+
+
+func _on_SaveButton_pressed():
+	$SaveDialog.popup_centered_clamped()
+
+
+func _on_SaveDialog_file_selected(path):
+	_rendered_template.save_png(path)

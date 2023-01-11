@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scenes/save_dialog.gd" type="Script" id=1]
+
+[node name="SaveDialog" type="FileDialog"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -23.0
+margin_bottom = -38.0
+dialog_text = "Choose where to save the rendered template."
+access = 2
+filters = PoolStringArray( "*.png" )
+script = ExtResource( 1 )
