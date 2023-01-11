@@ -1,5 +1,8 @@
-extends CenterContainer
+extends PanelContainer
 
+export (NodePath) var final_image_display_path: NodePath
+
+var final_image_control: TextureRect
 
 var _size_label: Label
 var _size_control: SpinBox
@@ -14,28 +17,36 @@ const SIZE_TEMPLATE = "Tile Dimensions: %03d"
 
 var _tile_dimensions: int = 64
 
-var _floor_colour: Color = $VBoxContainer/SettingsGrid/FloorColourPicker.get_picker().color
-var _wall_colour: Color = $VBoxContainer/SettingsGrid/WallColourPicker.get_picker().color
-var _border_colour: Color = $VBoxContainer/SettingsGrid/BorderColourPicker.get_picker().color
+var _floor_colour: Color
+var _wall_colour: Color
+var _border_colour: Color
+
+var _rendered_template: Image
 
 func _ready():
 	_size_control = $VBoxContainer/SettingsGrid/SizeSetting as SpinBox
 	_final_image_control = $VBoxContainer/FinalImage as TextureRect
 	_border_width_control = $VBoxContainer/SettingsGrid/BorderSpinbox as SpinBox
+	_final_image_control = get_node(final_image_display_path) as TextureRect
 	_reset_defaults_for_controls()
 	_capture_settings()
-	
+	generate_and_display_2x2()
 	
 func _reset_defaults_for_controls()->void:
 	_size_control.value = _tile_dimensions
 
-func _on_GenerateButton_pressed():
+func generate_and_display_2x2()->void:
 	_capture_settings()
+	var image: Image = generate_image_2x2()
+	var display_texture = ImageTexture.new()
+	_rendered_template = image
+	display_texture.create_from_image(image)
+	_final_image_control.texture = display_texture
 	
 func _on_HSlider_value_changed(value):
 	_tile_dimensions = floor(value) as int
 
-func generate_pixels()->Image:
+func generate_image_2x2()->Image:
 	_capture_settings()
 	var dimensions = get_dimensions_2x2()
 	var generated = Image.new()
@@ -65,13 +76,13 @@ func generate_pixels()->Image:
 		[0, 1, 1, 0],
 	]
 	assert(squares.size() == 16, "Should have 16 sets in 2x2")
+	var width_per_tile_set = _get_width_per_tile_set()
 	for set_x in range(4):
 		for set_y in range(4):
-			var square: Array = squares[set_y * 4 + set_y]
+			var square: Array = squares[set_y * 4 + set_x]
 			var tile = generate_tile_image(square)
-			# todo: destination vector 2
-			generated.blit_rect(tile, tile.get_rect(),  Vector2())
-	
+			var src_rect: Rect2 = Rect2(0, 0, tile.get_width(), tile.get_height())
+			generated.blit_rect(tile, src_rect,  Vector2(set_x * width_per_tile_set, set_y * width_per_tile_set))
 	return generated
 	
 func _capture_settings()->void:
@@ -80,6 +91,13 @@ func _capture_settings()->void:
 	_border_colour = $VBoxContainer/SettingsGrid/BorderColourPicker.get_picker().color
 
 
+func _get_width_per_tile_set()->int:
+	var single_tile_size = _size_control.value
+	var border_width = _border_width_control.value
+	var border_width_per_tile: int = border_width * 2
+	var width_per_tile: int = single_tile_size * 2 + border_width_per_tile
+	return width_per_tile
+
 ## Generates an image based on the given tile grid. Receives an array of booleans
 ## of the following order: [top_left, top_right, bottom_left, bottom_right]
 func generate_tile_image(grid: Array)->Image:
@@ -87,7 +105,7 @@ func generate_tile_image(grid: Array)->Image:
 	var border_width = _border_width_control.value
 	var tile: Image = Image.new()
 	var border_width_per_tile: int = border_width * 2
-	var width_per_tile: int = single_tile_size * 2 + border_width_per_tile
+	var width_per_tile: int = _get_width_per_tile_set()
 	tile.create(width_per_tile, width_per_tile, false, Image.FORMAT_RGBA8)
 	tile.fill(_border_colour)
 	# draw the floors underneath
@@ -109,7 +127,7 @@ func get_dimensions_2x2()->Vector2:
 	var width_per_tile: int = _size_control.value * 2 + border_width_per_tile
 	var total_width = width_per_tile * 4
 	
-	return Vector2(width_per_tile * 3, width_per_tile * 3)
+	return Vector2(total_width, total_width)
 
 
 
