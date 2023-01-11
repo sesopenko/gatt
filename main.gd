@@ -23,6 +23,7 @@ var _border_colour: Color
 
 var _rendered_template: Image
 
+
 func _ready():
 	_size_control = $VBoxContainer/SettingsGrid/SizeSetting as SpinBox
 	_final_image_control = $VBoxContainer/FinalImage as TextureRect
@@ -30,13 +31,17 @@ func _ready():
 	_final_image_control = get_node(final_image_display_path) as TextureRect
 	_reset_defaults_for_controls()
 	_capture_settings()
-	generate_and_display_2x2()
+	generate_and_display()
 	
 func _reset_defaults_for_controls()->void:
 	_size_control.value = _tile_dimensions
+	
+func generate_and_display()->void:
+	_capture_settings()
+	generate_and_display_2x2()
 
 func generate_and_display_2x2()->void:
-	_capture_settings()
+	
 	var image: Image = generate_image_2x2()
 	var display_texture = ImageTexture.new()
 	_rendered_template = image
@@ -129,8 +134,6 @@ func get_dimensions_2x2()->Vector2:
 	
 	return Vector2(total_width, total_width)
 
-
-
 func _on_ErrorPopupCloseButton_pressed():
 	$ErrorPopup.hide()
 
@@ -151,3 +154,6 @@ func _on_SaveDialog_file_selected(path):
 	add_child(dialog)
 	dialog.popup_centered()
 	
+
+func _on_value_changed(value):
+	generate_and_display()

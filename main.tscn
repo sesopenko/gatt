@@ -16,7 +16,7 @@ final_image_display_path = NodePath("VBoxContainer/FinalImageContainer/ScrollCon
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 713.0
-margin_bottom = 543.0
+margin_bottom = 519.0
 grow_horizontal = 2
 size_flags_horizontal = 3
 size_flags_vertical = 2
@@ -39,10 +39,11 @@ margin_right = 628.0
 margin_bottom = 17.0
 text = "Type:"
 
-[node name="OptionButton" type="OptionButton" parent="VBoxContainer/SettingsGrid"]
+[node name="TemplateTypeOptionButton" type="OptionButton" parent="VBoxContainer/SettingsGrid"]
 margin_left = 632.0
 margin_right = 706.0
 margin_bottom = 20.0
+mouse_default_cursor_shape = 2
 text = "2x2"
 items = [ "2x2", null, false, 0, null ]
 selected = 0
@@ -122,18 +123,10 @@ margin_bottom = 148.0
 mouse_default_cursor_shape = 2
 color = Color( 0.466667, 0.466667, 0.466667, 1 )
 
-[node name="GenerateButton" type="Button" parent="VBoxContainer"]
+[node name="FinalImageContainer" type="VBoxContainer" parent="VBoxContainer"]
 margin_top = 170.0
 margin_right = 706.0
-margin_bottom = 190.0
-mouse_default_cursor_shape = 2
-size_flags_horizontal = 3
-text = "Generate 2x2"
-
-[node name="FinalImageContainer" type="VBoxContainer" parent="VBoxContainer"]
-margin_top = 194.0
-margin_right = 706.0
-margin_bottom = 536.0
+margin_bottom = 512.0
 grow_horizontal = 2
 
 [node name="FinalLabel" type="Label" parent="VBoxContainer/FinalImageContainer"]
@@ -164,8 +157,14 @@ texture = ExtResource( 2 )
 margin_top = 322.0
 margin_right = 706.0
 margin_bottom = 342.0
+mouse_default_cursor_shape = 2
 text = "Save Template File"
 
 [connection signal="file_selected" from="SaveDialog" to="." method="_on_SaveDialog_file_selected"]
-[connection signal="pressed" from="VBoxContainer/GenerateButton" to="." method="generate_and_display_2x2"]
+[connection signal="item_selected" from="VBoxContainer/SettingsGrid/TemplateTypeOptionButton" to="." method="_on_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/SettingsGrid/SizeSetting" to="." method="_on_value_changed"]
+[connection signal="color_changed" from="VBoxContainer/SettingsGrid/FloorColourPicker" to="." method="_on_value_changed"]
+[connection signal="color_changed" from="VBoxContainer/SettingsGrid/WallColourPicker" to="." method="_on_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/SettingsGrid/BorderSpinbox" to="." method="_on_value_changed"]
+[connection signal="color_changed" from="VBoxContainer/SettingsGrid/BorderColourPicker" to="." method="_on_value_changed"]
 [connection signal="pressed" from="VBoxContainer/FinalImageContainer/SaveButton" to="." method="_on_SaveButton_pressed"]
