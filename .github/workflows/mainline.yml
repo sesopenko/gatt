@@ -46,7 +46,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: ${{ steps.tag_version.outputs.TAG_VERSION }}-win
-        path: ${{ steps.export.outputs.archive_directory }}/GATT.zip
+        path: ${{ steps.export.outputs.archive_directory }}/win.zip
     - name: download-artifact-win
       id: artifact_win_download
       uses: actions/download-artifact@v2.0.8
