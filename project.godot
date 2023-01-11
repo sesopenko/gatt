@@ -10,7 +10,8 @@ config_version=4
 
 [application]
 
-config/name="Godot Texture Templategen"
+config/name="GATG"
+config/description="Godot Autotile Template Generator"
 config/icon="res://icon.png"
 
 [display]
