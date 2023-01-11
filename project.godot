@@ -10,7 +10,7 @@ config_version=4
 
 [application]
 
-config/name="GATT"
+config/name="Godot Autotile Texture Templater (GATT)"
 config/description="Godot Autotile Texture Templater (GATT)"
 run/main_scene="res://main.tscn"
 config/use_custom_user_dir=true
@@ -20,7 +20,6 @@ config/icon="res://icon.png"
 [display]
 
 window/size/width=720
-window/size/height=720
 
 [gui]
 

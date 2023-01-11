@@ -33,6 +33,9 @@ func _ready():
 	_capture_settings()
 	generate_and_display()
 	
+	var d = OS.get_date()
+	$VBoxContainer/Copyright.text = "Copyright © Sean Esopenko %s" % d["year"]
+	
 func _reset_defaults_for_controls()->void:
 	_size_control.value = _tile_dimensions
 	
@@ -157,3 +160,7 @@ func _on_SaveDialog_file_selected(path):
 
 func _on_value_changed(value):
 	generate_and_display()
+
+
+func _on_License_pressed():
+	$LicenseDialog.popup_centered_clamped()

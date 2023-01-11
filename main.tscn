@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://main.gd" type="Script" id=1]
 [ext_resource path="res://assets/autotile_template_2x2_example.png" type="Texture" id=2]
 [ext_resource path="res://scenes/save_dialog.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/license_dialog.tscn" type="PackedScene" id=4]
 
 [node name="Main" type="PanelContainer"]
 anchor_right = 1.0
@@ -10,13 +11,21 @@ anchor_bottom = 1.0
 script = ExtResource( 1 )
 final_image_display_path = NodePath("VBoxContainer/FinalImageContainer/ScrollContainer/FinalImage")
 
+[node name="LicenseDialog" parent="." instance=ExtResource( 4 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 713.0
+margin_bottom = 713.0
+
 [node name="SaveDialog" parent="." instance=ExtResource( 3 )]
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 713.0
-margin_bottom = 519.0
+margin_bottom = 577.0
 grow_horizontal = 2
 size_flags_horizontal = 3
 size_flags_vertical = 2
@@ -25,6 +34,7 @@ size_flags_vertical = 2
 margin_right = 706.0
 margin_bottom = 14.0
 text = "Godot Autotile Texture Templater (GATT)"
+align = 1
 
 [node name="SettingsGrid" type="GridContainer" parent="VBoxContainer"]
 margin_top = 18.0
@@ -160,6 +170,25 @@ margin_bottom = 342.0
 mouse_default_cursor_shape = 2
 text = "Save Template File"
 
+[node name="Copyright" type="Label" parent="VBoxContainer"]
+margin_top = 516.0
+margin_right = 706.0
+margin_bottom = 546.0
+rect_min_size = Vector2( 0, 30 )
+text = "Copyright © Sean Esopenko"
+align = 1
+valign = 2
+
+[node name="License" type="Button" parent="VBoxContainer"]
+margin_left = 305.0
+margin_top = 550.0
+margin_right = 400.0
+margin_bottom = 570.0
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "View License"
+
 [connection signal="file_selected" from="SaveDialog" to="." method="_on_SaveDialog_file_selected"]
 [connection signal="item_selected" from="VBoxContainer/SettingsGrid/TemplateTypeOptionButton" to="." method="_on_value_changed"]
 [connection signal="value_changed" from="VBoxContainer/SettingsGrid/SizeSetting" to="." method="_on_value_changed"]
@@ -168,3 +197,4 @@ text = "Save Template File"
 [connection signal="value_changed" from="VBoxContainer/SettingsGrid/BorderSpinbox" to="." method="_on_value_changed"]
 [connection signal="color_changed" from="VBoxContainer/SettingsGrid/BorderColourPicker" to="." method="_on_value_changed"]
 [connection signal="pressed" from="VBoxContainer/FinalImageContainer/SaveButton" to="." method="_on_SaveButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/License" to="." method="_on_License_pressed"]
