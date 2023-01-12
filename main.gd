@@ -19,9 +19,6 @@ var saving_guide: bool = false
 var _block_dimensions: int = 16
 var _current_grid_mode = GRID_MODE.MODE_2X2
 
-var floor_colour: Color
-var wall_colour: Color
-var border_colour: Color
 var _preview_guide_file: bool = true
 
 var _floor_colour: Color
