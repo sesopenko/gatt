@@ -212,15 +212,27 @@ text = "Copyright © Sean Esopenko"
 align = 1
 valign = 2
 
-[node name="License" type="Button" parent="VBoxContainer"]
-margin_left = 305.0
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 572.0
-margin_right = 400.0
+margin_right = 706.0
 margin_bottom = 592.0
+alignment = 1
+
+[node name="License" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_left = 254.0
+margin_right = 354.0
+margin_bottom = 20.0
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-text = "View License"
+text = "Open License"
+
+[node name="github" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_left = 358.0
+margin_right = 452.0
+margin_bottom = 20.0
+mouse_default_cursor_shape = 2
+text = "Open Github"
 
 [connection signal="file_selected" from="SaveDialog" to="." method="_on_SaveDialog_file_selected"]
 [connection signal="item_selected" from="VBoxContainer/SettingsGrid/TemplateTypeOptionButton" to="." method="_on_value_changed"]
@@ -232,4 +244,5 @@ text = "View License"
 [connection signal="toggled" from="VBoxContainer/SettingsGrid/PreviewBorderCheckbox" to="." method="_on_PreviewBorderCheckbox_toggled"]
 [connection signal="pressed" from="VBoxContainer/FinalImageContainer/HBoxContainer/SaveButton" to="." method="_on_SaveButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/FinalImageContainer/HBoxContainer/SaveGuideButton" to="." method="_on_SaveGuideButton_pressed"]
-[connection signal="pressed" from="VBoxContainer/License" to="." method="_on_License_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/License" to="." method="_on_License_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/github" to="." method="_on_github_pressed"]

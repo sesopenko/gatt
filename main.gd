@@ -503,3 +503,7 @@ func _on_PreviewBorderCheckbox_pressed():
 func _on_PreviewBorderCheckbox_toggled(button_pressed):
 	_preview_guide_file = button_pressed
 	generate_and_display()
+
+
+func _on_github_pressed():
+	OS.shell_open("https://github.com/sesopenko/gatt")
