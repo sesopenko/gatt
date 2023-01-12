@@ -47,12 +47,24 @@ jobs:
       with:
         name: ${{ steps.tag_version.outputs.TAG_VERSION }}-win
         path: ${{ steps.export.outputs.archive_directory }}/win.zip
+    - name: upload linux artifact
+      id: upload_linux_artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ steps.tag_version.outputs.TAG_VERSION }}-linux
+        path: ${{ steps.export.outputs.archive_directory }}/linux.zip
     - name: download-artifact-win
       id: artifact_win_download
       uses: actions/download-artifact@v2.0.8
       with:
         name: ${{ steps.tag_version.outputs.TAG_VERSION }}-win
         path: build/win
+    - name: download-artifact-linux
+      id: artifact_win_download
+      uses: actions/download-artifact@v2.0.8
+      with:
+        name: ${{ steps.tag_version.outputs.TAG_VERSION }}-linux
+        path: build/linux
     - name: list artifact
       id: list_artifact
       run: ls -lha ./build/win
@@ -65,4 +77,14 @@ jobs:
         itchUsername: ${{secrets.ITCH_USERNAME}}
         itchGameId: ${{ secrets.ITCH_GAME_ID }}
         buildChannel: windows
+        buildNumber: ${{ steps.tag_version.outputs.TAG_VERSION }}
+    - name: push linux to itch
+      id: itch_linux_push
+      uses: KikimoraGames/itch-publish@v0.0.3
+      with:
+        butlerApiKey: ${{secrets.BUTLER_API_KEY}}
+        gameData: ./build/linux/linux.zip
+        itchUsername: ${{secrets.ITCH_USERNAME}}
+        itchGameId: ${{ secrets.ITCH_GAME_ID }}
+        buildChannel: linux
         buildNumber: ${{ steps.tag_version.outputs.TAG_VERSION }}
