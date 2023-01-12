@@ -1,6 +1,6 @@
 extends PanelContainer
 
-enum GRID_MODE {MODE_2X2, MODE_3X3}
+enum GRID_MODE {MODE_2X2, MODE_3X3_MINIMAL}
 
 export (NodePath) var final_image_display_path: NodePath
 
@@ -45,7 +45,7 @@ func generate_and_display()->void:
 	_capture_settings()
 	if _current_grid_mode == GRID_MODE.MODE_2X2:
 		generate_and_display_2x2()
-	elif _current_grid_mode == GRID_MODE.MODE_3X3:
+	elif _current_grid_mode == GRID_MODE.MODE_3X3_MINIMAL:
 		generate_and_display_3x3()
 		
 func generate_and_display_2x2()->void:
@@ -149,7 +149,7 @@ func get_dimensions()->Vector2:
 		num_sections_x = 4
 		num_sections_y = 4
 		tiles_per_section = 2
-	elif _current_grid_mode == GRID_MODE.MODE_3X3:
+	elif _current_grid_mode == GRID_MODE.MODE_3X3_MINIMAL:
 		num_sections_x = 12
 		num_sections_y = 4
 		tiles_per_section = 3
