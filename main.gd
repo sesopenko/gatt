@@ -92,7 +92,7 @@ func generate_and_display_2x2()->void:
 	
 	merge_images_and_display()
 	
-	$VBoxContainer/FinalImageContainer/HBoxContainer2/FinalLabel.text = "Subtile size: %d" % (_block_dimensions * 2)
+	_update_subtile_helper(_block_dimensions * 2)
 	
 func generate_and_display_3x3()->void:
 	_capture_settings()
@@ -138,7 +138,10 @@ func generate_and_display_3x3()->void:
 			_rendered_guide.fill_rect(bottom_rect, _border_colour)
 	
 	merge_images_and_display()
-	$VBoxContainer/FinalImageContainer/HBoxContainer2/FinalLabel.text = "Subtile size: %d" % (_block_dimensions * 3)
+	_update_subtile_helper(_block_dimensions * 3)
+	
+func _update_subtile_helper(subtile_size: int)->void:
+	$VBoxContainer/FinalImageContainer/HBoxContainer2/FinalLabel.text = "Subtile size: %d" % subtile_size
 
 func get_dimensions()->Vector2:
 	var border_width = _border_width_control.value as int

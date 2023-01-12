@@ -81,7 +81,7 @@ margin_top = 52.0
 margin_right = 706.0
 margin_bottom = 72.0
 mouse_default_cursor_shape = 2
-color = Color( 0, 0, 1, 1 )
+color = Color( 0.129412, 0.533333, 0.0980392, 1 )
 
 [node name="WallLabel" type="Label" parent="VBoxContainer/SettingsGrid"]
 margin_top = 79.0
@@ -96,6 +96,7 @@ margin_top = 76.0
 margin_right = 706.0
 margin_bottom = 96.0
 mouse_default_cursor_shape = 2
+color = Color( 0.992157, 1, 0.223529, 1 )
 
 [node name="BorderLabel" type="Label" parent="VBoxContainer/SettingsGrid"]
 margin_top = 105.0
@@ -124,7 +125,7 @@ margin_top = 128.0
 margin_right = 706.0
 margin_bottom = 148.0
 mouse_default_cursor_shape = 2
-color = Color( 1, 1, 1, 1 )
+color = Color( 0.717647, 0.223529, 1, 1 )
 
 [node name="PreviewBorderLabel" type="Label" parent="VBoxContainer/SettingsGrid"]
 margin_top = 157.0
