@@ -17,8 +17,6 @@ var border_colour: Color
 var _preview_guide_file: bool = true
 var _preview_guide_control: CheckButton
 
-const SIZE_TEMPLATE = "Tile Dimensions: %03d"
-
 var _tile_dimensions: int = 16
 
 var _floor_colour: Color
@@ -26,8 +24,8 @@ var _wall_colour: Color
 var _border_colour: Color
 var _tile_border_colour: Color
 
-var _rendered_template: Image
-var _rendered_guide: Image
+onready var _rendered_template: Image = Image.new()
+onready var _rendered_guide: Image = Image.new()
 
 var saving_guide: bool = false
 
@@ -317,12 +315,10 @@ func get_set_3x3()->Array:
 func generate_and_display_2x2()->void:
 	_capture_settings()
 	var dimensions = get_dimensions()
-	var template_img:Image = Image.new()
-	var guide_img: Image = Image.new()
 	var display_img: Image = Image.new()
-	template_img.create(dimensions.x, dimensions.y, false, Image.FORMAT_RGBA8)
-	template_img.fill(_floor_colour)
-	guide_img.create(dimensions.x, dimensions.y, false, Image.FORMAT_RGBA8)
+	_rendered_template.create(dimensions.x, dimensions.y, false, Image.FORMAT_RGBA8)
+	_rendered_template.fill(_floor_colour)
+	_rendered_guide.create(dimensions.x, dimensions.y, false, Image.FORMAT_RGBA8)
 	display_img.create(dimensions.x, dimensions.y, false, Image.FORMAT_RGBA8)
 	
 	var set: Array = get_set_2x2()
@@ -348,22 +344,20 @@ func generate_and_display_2x2()->void:
 			var blit_offset_x:int = region_offset_x + (blit_x * (_tile_dimensions))
 			var blit_offset_y:int = region_offset_y + (blit_y * (_tile_dimensions))
 			var tile_rect:Rect2 = Rect2(blit_offset_x, blit_offset_y, _tile_dimensions, _tile_dimensions)
-			template_img.fill_rect(tile_rect, tile_color)
+			_rendered_template.fill_rect(tile_rect, tile_color)
 		# Draw guide for region
 		var top_rect := Rect2(region_offset_x, region_offset_y, dimensions_per_region, border_width)
-		guide_img.fill_rect(top_rect, _border_colour)
+		_rendered_guide.fill_rect(top_rect, _border_colour)
 		var left_rect := Rect2(region_offset_x, region_offset_y, border_width, dimensions_per_region)
-		guide_img.fill_rect(top_rect, _border_colour)
+		_rendered_guide.fill_rect(top_rect, _border_colour)
 		var right_rect := Rect2(region_offset_x + dimensions_per_region - border_width, region_offset_y, border_width, dimensions_per_region)
-		guide_img.fill_rect(right_rect, _border_colour)
+		_rendered_guide.fill_rect(right_rect, _border_colour)
 		var bottom_rect := Rect2(region_offset_x, region_offset_y + dimensions_per_region - border_width, dimensions_per_region, border_width)
-		guide_img.fill_rect(bottom_rect, _border_colour)
-	_rendered_template = template_img
-	_rendered_guide = guide_img
+		_rendered_guide.fill_rect(bottom_rect, _border_colour)
 	
-	display_img.blit_rect(template_img, Rect2(0, 0, dimensions.x, dimensions.y), Vector2(0, 0))
+	display_img.blit_rect(_rendered_template, Rect2(0, 0, dimensions.x, dimensions.y), Vector2(0, 0))
 	if _preview_guide_file:
-		display_img.blend_rect(guide_img, Rect2(0, 0, dimensions.x, dimensions.y), Vector2(0, 0))
+		display_img.blend_rect(_rendered_guide, Rect2(0, 0, dimensions.x, dimensions.y), Vector2(0, 0))
 	var display_texture = ImageTexture.new()
 	display_texture.create_from_image(display_img)
 	_final_image_control.texture = display_texture
@@ -372,12 +366,10 @@ func generate_and_display_2x2()->void:
 func generate_and_display_3x3()->void:
 	_capture_settings()
 	var dimensions = get_dimensions()
-	var template_img:Image = Image.new()
-	var guide_img: Image = Image.new()
 	var display_img: Image = Image.new()
-	template_img.create(dimensions.x, dimensions.y, false, Image.FORMAT_RGBA8)
-	template_img.fill(_floor_colour)
-	guide_img.create(dimensions.x, dimensions.y, false, Image.FORMAT_RGBA8)
+	_rendered_template.create(dimensions.x, dimensions.y, false, Image.FORMAT_RGBA8)
+	_rendered_template.fill(_floor_colour)
+	_rendered_guide.create(dimensions.x, dimensions.y, false, Image.FORMAT_RGBA8)
 	display_img.create(dimensions.x, dimensions.y, false, Image.FORMAT_RGBA8)
 	
 	var set: Array = get_set_3x3()
@@ -405,22 +397,20 @@ func generate_and_display_3x3()->void:
 					var blit_offset_x:int = region_offset_x + (blit_x * (_tile_dimensions))
 					var blit_offset_y:int = region_offset_y + (blit_y * (_tile_dimensions))
 					var tile_rect:Rect2 = Rect2(blit_offset_x, blit_offset_y, _tile_dimensions, _tile_dimensions)
-					template_img.fill_rect(tile_rect, tile_color)
+					_rendered_template.fill_rect(tile_rect, tile_color)
 			# Draw guide for region
 			var top_rect := Rect2(region_offset_x, region_offset_y, dimensions_per_region, border_width)
-			guide_img.fill_rect(top_rect, _border_colour)
+			_rendered_guide.fill_rect(top_rect, _border_colour)
 			var left_rect := Rect2(region_offset_x, region_offset_y, border_width, dimensions_per_region)
-			guide_img.fill_rect(top_rect, _border_colour)
+			_rendered_guide.fill_rect(top_rect, _border_colour)
 			var right_rect := Rect2(region_offset_x + dimensions_per_region - border_width, region_offset_y, border_width, dimensions_per_region)
-			guide_img.fill_rect(right_rect, _border_colour)
+			_rendered_guide.fill_rect(right_rect, _border_colour)
 			var bottom_rect := Rect2(region_offset_x, region_offset_y + dimensions_per_region - border_width, dimensions_per_region, border_width)
-			guide_img.fill_rect(bottom_rect, _border_colour)
+			_rendered_guide.fill_rect(bottom_rect, _border_colour)
 	
-	_rendered_template = template_img
-	_rendered_guide = guide_img
-	display_img.blit_rect(template_img, Rect2(0, 0, dimensions.x, dimensions.y), Vector2(0, 0))
+	display_img.blit_rect(_rendered_template, Rect2(0, 0, dimensions.x, dimensions.y), Vector2(0, 0))
 	if _preview_guide_file:
-		display_img.blend_rect(guide_img, Rect2(0, 0, dimensions.x, dimensions.y), Vector2(0, 0))
+		display_img.blend_rect(_rendered_guide, Rect2(0, 0, dimensions.x, dimensions.y), Vector2(0, 0))
 	var display_texture = ImageTexture.new()
 	display_texture.create_from_image(display_img)
 	_final_image_control.texture = display_texture
