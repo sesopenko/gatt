@@ -7,15 +7,16 @@ export (NodePath) var final_image_display_path: NodePath
 var final_image_control: TextureRect
 
 var _size_label: Label
-var _size_control: SpinBox
-var _final_image_control: TextureRect
-var _border_width_control: SpinBox
+onready var _size_control: SpinBox = $VBoxContainer/SettingsGrid/SizeSetting as SpinBox
+onready var _final_image_control: TextureRect = get_node(final_image_display_path) as TextureRect
+onready var _border_width_control: SpinBox = $VBoxContainer/SettingsGrid/BorderSpinbox as SpinBox
+onready var _preview_guide_control: CheckButton = $VBoxContainer/SettingsGrid/PreviewBorderCheckbox as CheckButton
 
 var floor_colour: Color
 var wall_colour: Color
 var border_colour: Color
 var _preview_guide_file: bool = true
-var _preview_guide_control: CheckButton
+
 
 var _tile_dimensions: int = 16
 
@@ -33,10 +34,6 @@ var _current_grid_mode = GRID_MODE.MODE_2X2
 
 
 func _ready():
-	_size_control = $VBoxContainer/SettingsGrid/SizeSetting as SpinBox
-	_border_width_control = $VBoxContainer/SettingsGrid/BorderSpinbox as SpinBox
-	_final_image_control = get_node(final_image_display_path) as TextureRect
-	_preview_guide_control = $VBoxContainer/SettingsGrid/PreviewBorderCheckbox as CheckButton
 	_reset_defaults_for_controls()
 	_capture_settings()
 	generate_and_display()
