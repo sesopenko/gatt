@@ -54,7 +54,7 @@ margin_top = 29.0
 margin_right = 628.0
 margin_bottom = 43.0
 size_flags_horizontal = 3
-text = "Tile Size"
+text = "Block Size"
 
 [node name="SizeSetting" type="SpinBox" parent="VBoxContainer/SettingsGrid"]
 margin_left = 632.0
@@ -143,11 +143,21 @@ margin_right = 706.0
 margin_bottom = 540.0
 grow_horizontal = 2
 
-[node name="FinalLabel" type="Label" parent="VBoxContainer/FinalImageContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/FinalImageContainer"]
 margin_right = 706.0
+margin_bottom = 14.0
+
+[node name="FinalLabel" type="Label" parent="VBoxContainer/FinalImageContainer/HBoxContainer2"]
+margin_right = 180.0
 margin_bottom = 14.0
 text = "Rendered Autotile Template"
 align = 1
+
+[node name="Label" type="Label" parent="VBoxContainer/FinalImageContainer/HBoxContainer2"]
+margin_left = 184.0
+margin_right = 463.0
+margin_bottom = 14.0
+text = "(Choose this in tilemap and tileset settings)"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/FinalImageContainer"]
 margin_top = 18.0

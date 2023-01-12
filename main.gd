@@ -367,6 +367,7 @@ func generate_and_display_2x2()->void:
 	var display_texture = ImageTexture.new()
 	display_texture.create_from_image(display_img)
 	_final_image_control.texture = display_texture
+	$VBoxContainer/FinalImageContainer/HBoxContainer2/FinalLabel.text = "Subtile size: %d" % (_tile_dimensions * 2)
 	
 func generate_and_display_3x3()->void:
 	_capture_settings()
@@ -423,6 +424,7 @@ func generate_and_display_3x3()->void:
 	var display_texture = ImageTexture.new()
 	display_texture.create_from_image(display_img)
 	_final_image_control.texture = display_texture
+	$VBoxContainer/FinalImageContainer/HBoxContainer2/FinalLabel.text = "Subtile size: %d" % (_tile_dimensions * 3)
 
 func _capture_settings()->void:
 	_floor_colour = $VBoxContainer/SettingsGrid/FloorColourPicker.get_picker().color
