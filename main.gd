@@ -31,13 +31,6 @@ func _ready():
 	_capture_settings()
 	generate_and_display()
 	
-	_set_copyright_date()
-
-
-func _set_copyright_date()->void:
-	var d = OS.get_date()
-	$VBoxContainer/Copyright.text = "Copyright © Sean Esopenko %s" % d["year"]
-	
 func _reset_defaults_for_controls()->void:
 	_size_control.value = _block_dimensions
 	$VBoxContainer/SettingsGrid/TemplateTypeOptionButton.selected = _current_grid_mode

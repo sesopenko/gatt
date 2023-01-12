@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://main.gd" type="Script" id=1]
 [ext_resource path="res://assets/autotile_template_2x2_example.png" type="Texture" id=2]
 [ext_resource path="res://scenes/save_dialog.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/copyright.tscn" type="PackedScene" id=4]
 
 [node name="Main" type="PanelContainer"]
 anchor_right = 1.0
@@ -16,7 +17,7 @@ final_image_display_path = NodePath("VBoxContainer/FinalImageContainer/ScrollCon
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 713.0
-margin_bottom = 599.0
+margin_bottom = 601.0
 grow_horizontal = 2
 size_flags_horizontal = 3
 size_flags_vertical = 2
@@ -140,7 +141,7 @@ pressed = true
 [node name="FinalImageContainer" type="VBoxContainer" parent="VBoxContainer"]
 margin_top = 180.0
 margin_right = 706.0
-margin_bottom = 540.0
+margin_bottom = 550.0
 grow_horizontal = 2
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/FinalImageContainer"]
@@ -187,51 +188,57 @@ align = 1
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/FinalImageContainer"]
 margin_top = 340.0
 margin_right = 706.0
-margin_bottom = 360.0
+margin_bottom = 370.0
 alignment = 1
 
 [node name="SaveButton" type="Button" parent="VBoxContainer/FinalImageContainer/HBoxContainer"]
 margin_left = 230.0
 margin_right = 362.0
-margin_bottom = 20.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 0, 30 )
 mouse_default_cursor_shape = 2
 text = "Save Template File"
 
 [node name="SaveGuideButton" type="Button" parent="VBoxContainer/FinalImageContainer/HBoxContainer"]
 margin_left = 366.0
 margin_right = 476.0
-margin_bottom = 20.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 0, 30 )
 text = "Save Guide File"
 
-[node name="Copyright" type="Label" parent="VBoxContainer"]
-margin_top = 544.0
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 554.0
 margin_right = 706.0
-margin_bottom = 568.0
-rect_min_size = Vector2( 0, 24 )
-text = "Copyright © Sean Esopenko"
+margin_bottom = 594.0
+rect_min_size = Vector2( 0, 40 )
+alignment = 1
+
+[node name="Copyright" parent="VBoxContainer/HBoxContainer" instance=ExtResource( 4 )]
+margin_left = 141.0
+margin_top = 13.0
+margin_right = 363.0
+margin_bottom = 27.0
 align = 1
 valign = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 572.0
-margin_right = 706.0
-margin_bottom = 592.0
-alignment = 1
-
 [node name="License" type="Button" parent="VBoxContainer/HBoxContainer"]
-margin_left = 254.0
-margin_right = 354.0
-margin_bottom = 20.0
+margin_left = 367.0
+margin_top = 10.0
+margin_right = 467.0
+margin_bottom = 30.0
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "Open License"
 
 [node name="github" type="Button" parent="VBoxContainer/HBoxContainer"]
-margin_left = 358.0
-margin_right = 452.0
-margin_bottom = 20.0
+margin_left = 471.0
+margin_top = 10.0
+margin_right = 565.0
+margin_bottom = 30.0
 mouse_default_cursor_shape = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 text = "Open Github"
 
 [connection signal="file_selected" from="SaveDialog" to="." method="_on_SaveDialog_file_selected"]
