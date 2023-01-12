@@ -60,7 +60,7 @@ jobs:
         name: ${{ steps.tag_version.outputs.TAG_VERSION }}-win
         path: build/win
     - name: download-artifact-linux
-      id: artifact_win_download
+      id: artifact_linux_download
       uses: actions/download-artifact@v2.0.8
       with:
         name: ${{ steps.tag_version.outputs.TAG_VERSION }}-linux
