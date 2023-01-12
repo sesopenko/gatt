@@ -162,8 +162,11 @@ func merge_images_and_display()->void:
 	var dimensions = get_dimensions()
 	display_img.create(dimensions.x, dimensions.y, false, Image.FORMAT_RGBA8)
 	
+	# this can be simply blit'd since we don't need to preserve anything underneath.  More
+	# performant this way.
 	display_img.blit_rect(_rendered_template, Rect2(0, 0, dimensions.x, dimensions.y), Vector2(0, 0))
 	if _preview_guide_file:
+		# blend this on top to preview the sub cells.
 		display_img.blend_rect(_rendered_guide, Rect2(0, 0, dimensions.x, dimensions.y), Vector2(0, 0))
 	var display_texture = ImageTexture.new()
 	display_texture.create_from_image(display_img)
