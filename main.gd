@@ -42,9 +42,6 @@ func generate_and_display()->void:
 	elif _current_grid_mode == GRID_MODE.MODE_3X3:
 		generate_and_display_3x3()
 	
-func _on_HSlider_value_changed(value):
-	_block_dimensions = floor(value) as int
-
 func get_set_2x2()->Array:
 	var squares = [
 		# Single square in each corner (4)
