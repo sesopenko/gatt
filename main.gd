@@ -153,7 +153,9 @@ func get_dimensions()->Vector2:
 		num_sections_x = 12
 		num_sections_y = 4
 		tiles_per_section = 3
-	return Vector2(num_sections_x * tiles_per_section * _block_dimensions, num_sections_y * tiles_per_section * _block_dimensions)
+	var final_x = num_sections_x * tiles_per_section * _block_dimensions
+	var final_y = num_sections_y * tiles_per_section * _block_dimensions
+	return Vector2(final_x, final_y)
 
 func merge_images_and_display()->void:
 	var display_img: Image = Image.new()
