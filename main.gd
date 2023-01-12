@@ -71,15 +71,15 @@ func generate_and_display_2x2()->void:
 		var subtile_offset_y:int = subtile_y * dimensions_per_subtile
 		
 		for bi in subtile.size():
-			var tile_color = _floor_colour
+			var block_colour = _floor_colour
 			if subtile[bi]:
-				tile_color = _wall_colour
-			var blit_x:int = posmod(bi, 2)
-			var blit_y:int = floor(bi / 2)
-			var blit_offset_x:int = subtile_offset_x + (blit_x * (_block_dimensions))
-			var blit_offset_y:int = subtile_offset_y + (blit_y * (_block_dimensions))
-			var tile_rect:Rect2 = Rect2(blit_offset_x, blit_offset_y, _block_dimensions, _block_dimensions)
-			_rendered_template.fill_rect(tile_rect, tile_color)
+				block_colour = _wall_colour
+			var block_x:int = posmod(bi, 2)
+			var block_y:int = floor(bi / 2)
+			var block_offset_x:int = subtile_offset_x + (block_x * (_block_dimensions))
+			var block_offset_y:int = subtile_offset_y + (block_y * (_block_dimensions))
+			var block_rect:Rect2 = Rect2(block_offset_x, block_offset_y, _block_dimensions, _block_dimensions)
+			_rendered_template.fill_rect(block_rect, block_colour)
 		# Draw guide for subtile
 		var top_rect := Rect2(subtile_offset_x, subtile_offset_y, dimensions_per_subtile, border_width)
 		_rendered_guide.fill_rect(top_rect, _border_colour)
@@ -103,9 +103,9 @@ func generate_and_display_3x3()->void:
 	
 	var set: Array = TileTemplate.get_3x3()
 	
-	var tiles_per_subtile_dimension = 3
+	var blocks_per_subtile_dimension = 3
 	var border_width:int = _border_width_control.value as int
-	var dimensions_per_subtile: int = _block_dimensions * tiles_per_subtile_dimension
+	var dimensions_per_subtile: int = _block_dimensions * blocks_per_subtile_dimension
 	
 	var subtiles_dimensions_x:int = 12
 	var subtiles_dimensions_y:int = 4
@@ -117,16 +117,16 @@ func generate_and_display_3x3()->void:
 			var subtile_offset_x:int = subtile_x * dimensions_per_subtile
 			var subtile_offset_y:int = subtile_y * dimensions_per_subtile
 			
-			for blit_x in tiles_per_subtile_dimension:
-				for blit_y in tiles_per_subtile_dimension:
-					var ri:int = blit_y * tiles_per_subtile_dimension + posmod(blit_x, tiles_per_subtile_dimension)
-					var tile_color = _floor_colour
+			for block_x in blocks_per_subtile_dimension:
+				for block_y in blocks_per_subtile_dimension:
+					var ri:int = block_y * blocks_per_subtile_dimension + posmod(block_x, blocks_per_subtile_dimension)
+					var block_colour = _floor_colour
 					if subtile[ri]:
-						tile_color = _wall_colour
-					var blit_offset_x:int = subtile_offset_x + (blit_x * (_block_dimensions))
-					var blit_offset_y:int = subtile_offset_y + (blit_y * (_block_dimensions))
-					var tile_rect:Rect2 = Rect2(blit_offset_x, blit_offset_y, _block_dimensions, _block_dimensions)
-					_rendered_template.fill_rect(tile_rect, tile_color)
+						block_colour = _wall_colour
+					var block_offset_x:int = subtile_offset_x + (block_x * (_block_dimensions))
+					var block_offset_y:int = subtile_offset_y + (block_y * (_block_dimensions))
+					var block_rect:Rect2 = Rect2(block_offset_x, block_offset_y, _block_dimensions, _block_dimensions)
+					_rendered_template.fill_rect(block_rect, block_colour)
 			# Draw guide for subtile
 			var top_rect := Rect2(subtile_offset_x, subtile_offset_y, dimensions_per_subtile, border_width)
 			_rendered_guide.fill_rect(top_rect, _border_colour)
