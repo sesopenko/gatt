@@ -3,59 +3,62 @@ class_name TileTemplate
 
 static func get_2x2()->Array:
 	# Provides all the possible combinations for 2x2
+	# Using an aesthetic, easier to understand map rather than
+	# computing them all.
+	
+	# Reference: https://docs.godotengine.org/en/stable/tutorials/2d/using_tilemaps.html#autotiles
 	var squares = [
-		# Single square in each corner (4)
-		[1, 0,
-		0, 0],
-		
-		[0, 1,
-		0, 0],
-		
+		# Row 0
 		[0, 0,
 		1, 0],
-		
-		[0, 0,
-		0, 1],
-		
-		# edges (4)
-		[1, 1,
-		0, 0],
 		
 		[0, 1,
 		0, 1],
 		
+		[1, 0,
+		1, 1,],
+		
 		[0, 0,
-		1, 1],
+		1, 1,],
 		
+		# Row 1
 		[1, 0,
-		1, 0],
-		
-		# inverted square in each corner (4)
-		[0, 1,
-		1, 1],
-		
-		[1, 0,
-		1, 1],
-		
-		[1, 1,
-		 0, 1],
-		
-		[1, 1,
-		1, 0],
-		
-		# full squares (2)
-		[0, 0,
-		0, 0],
-		
-		[1, 1,
-		1, 1],
-		
-		# diagonals (2)
-		[1, 0,
-		0, 1],
+		0, 1,],
 		
 		[0, 1,
+		1, 1,],
+		
+		[1, 1,
+		1, 1,],
+		
+		[1 ,1,
 		1, 0],
+		
+		# Row 2
+		[0, 1,
+		0, 0,],
+		
+		[1, 1,
+		0, 0,],
+		
+		[1, 1,
+		0, 1,],
+		
+		[1, 0,
+		1, 0,],
+		
+		# Row 3
+		[0, 0,
+		0, 0,],
+		
+		[0, 0,
+		0, 1,],
+		
+		[0, 1,
+		1, 0,],
+		
+		[1, 0,
+		0, 0,],
 	]
 	return squares
 	
