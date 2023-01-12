@@ -35,21 +35,26 @@ func _reset_defaults_for_controls()->void:
 	_size_control.value = _block_dimensions
 	$VBoxContainer/SettingsGrid/TemplateTypeOptionButton.selected = _current_grid_mode
 	
+func _capture_settings()->void:
+	_floor_colour = $VBoxContainer/SettingsGrid/FloorColourPicker.get_picker().color
+	_wall_colour = $VBoxContainer/SettingsGrid/WallColourPicker.get_picker().color
+	_border_colour = $VBoxContainer/SettingsGrid/BorderColourPicker.get_picker().color
+	_current_grid_mode = $VBoxContainer/SettingsGrid/TemplateTypeOptionButton.selected
+	
 func generate_and_display()->void:
 	_capture_settings()
 	if _current_grid_mode == GRID_MODE.MODE_2X2:
 		generate_and_display_2x2()
 	elif _current_grid_mode == GRID_MODE.MODE_3X3:
 		generate_and_display_3x3()
-
+		
 func generate_and_display_2x2()->void:
 	_capture_settings()
 	var dimensions = get_dimensions()
-	var display_img: Image = Image.new()
+	
 	_rendered_template.create(dimensions.x, dimensions.y, false, Image.FORMAT_RGBA8)
 	_rendered_template.fill(_floor_colour)
 	_rendered_guide.create(dimensions.x, dimensions.y, false, Image.FORMAT_RGBA8)
-	display_img.create(dimensions.x, dimensions.y, false, Image.FORMAT_RGBA8)
 	
 	var set: Array = TileTemplate.get_2x2()
 	var num_regions_2x2 := 4
@@ -85,22 +90,16 @@ func generate_and_display_2x2()->void:
 		var bottom_rect := Rect2(region_offset_x, region_offset_y + dimensions_per_region - border_width, dimensions_per_region, border_width)
 		_rendered_guide.fill_rect(bottom_rect, _border_colour)
 	
-	display_img.blit_rect(_rendered_template, Rect2(0, 0, dimensions.x, dimensions.y), Vector2(0, 0))
-	if _preview_guide_file:
-		display_img.blend_rect(_rendered_guide, Rect2(0, 0, dimensions.x, dimensions.y), Vector2(0, 0))
-	var display_texture = ImageTexture.new()
-	display_texture.create_from_image(display_img)
-	_final_image_control.texture = display_texture
+	merge_images_and_display()
+	
 	$VBoxContainer/FinalImageContainer/HBoxContainer2/FinalLabel.text = "Subtile size: %d" % (_block_dimensions * 2)
 	
 func generate_and_display_3x3()->void:
 	_capture_settings()
 	var dimensions = get_dimensions()
-	var display_img: Image = Image.new()
 	_rendered_template.create(dimensions.x, dimensions.y, false, Image.FORMAT_RGBA8)
 	_rendered_template.fill(_floor_colour)
 	_rendered_guide.create(dimensions.x, dimensions.y, false, Image.FORMAT_RGBA8)
-	display_img.create(dimensions.x, dimensions.y, false, Image.FORMAT_RGBA8)
 	
 	var set: Array = TileTemplate.get_3x3()
 	
@@ -138,24 +137,8 @@ func generate_and_display_3x3()->void:
 			var bottom_rect := Rect2(region_offset_x, region_offset_y + dimensions_per_region - border_width, dimensions_per_region, border_width)
 			_rendered_guide.fill_rect(bottom_rect, _border_colour)
 	
-	display_img.blit_rect(_rendered_template, Rect2(0, 0, dimensions.x, dimensions.y), Vector2(0, 0))
-	if _preview_guide_file:
-		display_img.blend_rect(_rendered_guide, Rect2(0, 0, dimensions.x, dimensions.y), Vector2(0, 0))
-	var display_texture = ImageTexture.new()
-	display_texture.create_from_image(display_img)
-	_final_image_control.texture = display_texture
+	merge_images_and_display()
 	$VBoxContainer/FinalImageContainer/HBoxContainer2/FinalLabel.text = "Subtile size: %d" % (_block_dimensions * 3)
-
-func _capture_settings()->void:
-	_floor_colour = $VBoxContainer/SettingsGrid/FloorColourPicker.get_picker().color
-	_wall_colour = $VBoxContainer/SettingsGrid/WallColourPicker.get_picker().color
-	_border_colour = $VBoxContainer/SettingsGrid/BorderColourPicker.get_picker().color
-	_current_grid_mode = $VBoxContainer/SettingsGrid/TemplateTypeOptionButton.selected
-
-func _get_width_per_tile_set()->int:
-	var single_tile_size = _size_control.value
-	var width_per_tile: int = single_tile_size * 2
-	return width_per_tile
 
 func get_dimensions()->Vector2:
 	var border_width = _border_width_control.value as int
@@ -174,6 +157,23 @@ func get_dimensions()->Vector2:
 		
 	else:
 		return Vector2(1,1)
+
+func merge_images_and_display()->void:
+	var display_img: Image = Image.new()
+	var dimensions = get_dimensions()
+	display_img.create(dimensions.x, dimensions.y, false, Image.FORMAT_RGBA8)
+	
+	display_img.blit_rect(_rendered_template, Rect2(0, 0, dimensions.x, dimensions.y), Vector2(0, 0))
+	if _preview_guide_file:
+		display_img.blend_rect(_rendered_guide, Rect2(0, 0, dimensions.x, dimensions.y), Vector2(0, 0))
+	var display_texture = ImageTexture.new()
+	display_texture.create_from_image(display_img)
+	_final_image_control.texture = display_texture
+
+func _get_width_per_tile_set()->int:
+	var single_tile_size = _size_control.value
+	var width_per_tile: int = single_tile_size * 2
+	return width_per_tile
 
 func _on_ErrorPopupCloseButton_pressed():
 	$ErrorPopup.hide()
