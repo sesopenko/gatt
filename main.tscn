@@ -30,21 +30,21 @@ text = "Godot Autotile Texture Templater (GATT)"
 align = 1
 
 [node name="SettingsGrid" type="GridContainer" parent="VBoxContainer"]
-margin_left = 461.0
-margin_right = 804.0
+margin_left = 452.0
+margin_right = 814.0
 margin_bottom = 200.0
 size_flags_horizontal = 4
 columns = 2
 
 [node name="LabelType" type="Label" parent="VBoxContainer/SettingsGrid"]
 margin_top = 3.0
-margin_right = 139.0
+margin_right = 158.0
 margin_bottom = 17.0
 text = "Type:"
 
 [node name="TemplateTypeOptionButton" type="OptionButton" parent="VBoxContainer/SettingsGrid"]
-margin_left = 143.0
-margin_right = 343.0
+margin_left = 162.0
+margin_right = 362.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 200, 0 )
 mouse_default_cursor_shape = 2
@@ -54,15 +54,15 @@ selected = 0
 
 [node name="SizeLabel" type="Label" parent="VBoxContainer/SettingsGrid"]
 margin_top = 29.0
-margin_right = 139.0
+margin_right = 158.0
 margin_bottom = 43.0
 size_flags_horizontal = 3
 text = "Block Size"
 
 [node name="SizeSetting" type="SpinBox" parent="VBoxContainer/SettingsGrid"]
-margin_left = 143.0
+margin_left = 162.0
 margin_top = 24.0
-margin_right = 343.0
+margin_right = 362.0
 margin_bottom = 48.0
 min_value = 1.0
 max_value = 256.0
@@ -71,86 +71,86 @@ rounded = true
 
 [node name="FloorLabel" type="Label" parent="VBoxContainer/SettingsGrid"]
 margin_top = 55.0
-margin_right = 139.0
+margin_right = 158.0
 margin_bottom = 69.0
 size_flags_horizontal = 3
 text = "Floor Colour:"
 
 [node name="FloorColourPicker" type="ColorPickerButton" parent="VBoxContainer/SettingsGrid"]
-margin_left = 143.0
+margin_left = 162.0
 margin_top = 52.0
-margin_right = 343.0
+margin_right = 362.0
 margin_bottom = 72.0
 mouse_default_cursor_shape = 2
 color = Color( 0.129412, 0.533333, 0.0980392, 1 )
 
 [node name="WallLabel" type="Label" parent="VBoxContainer/SettingsGrid"]
 margin_top = 79.0
-margin_right = 139.0
+margin_right = 158.0
 margin_bottom = 93.0
 size_flags_horizontal = 3
 text = "Top Wall Colour:"
 
 [node name="WallColourPicker" type="ColorPickerButton" parent="VBoxContainer/SettingsGrid"]
-margin_left = 143.0
+margin_left = 162.0
 margin_top = 76.0
-margin_right = 343.0
+margin_right = 362.0
 margin_bottom = 96.0
 mouse_default_cursor_shape = 2
 color = Color( 0.992157, 1, 0.223529, 1 )
 
 [node name="SideWallLabel" type="Label" parent="VBoxContainer/SettingsGrid"]
 margin_top = 103.0
-margin_right = 139.0
+margin_right = 158.0
 margin_bottom = 117.0
-text = "Side Wall Colour:"
+text = "Front Facing Wall Colour:"
 
 [node name="SideWallColourPicker" type="ColorPickerButton" parent="VBoxContainer/SettingsGrid"]
-margin_left = 143.0
+margin_left = 162.0
 margin_top = 100.0
-margin_right = 343.0
+margin_right = 362.0
 margin_bottom = 120.0
 color = Color( 0.223529, 1, 0.952941, 1 )
 
 [node name="BorderLabel" type="Label" parent="VBoxContainer/SettingsGrid"]
 margin_top = 129.0
-margin_right = 139.0
+margin_right = 158.0
 margin_bottom = 143.0
 size_flags_horizontal = 3
 text = "Border Pixels:"
 
 [node name="BorderSpinbox" type="SpinBox" parent="VBoxContainer/SettingsGrid"]
-margin_left = 143.0
+margin_left = 162.0
 margin_top = 124.0
-margin_right = 343.0
+margin_right = 362.0
 margin_bottom = 148.0
 max_value = 10.0
 value = 1.0
 
 [node name="BorderColourLabel" type="Label" parent="VBoxContainer/SettingsGrid"]
 margin_top = 155.0
-margin_right = 139.0
+margin_right = 158.0
 margin_bottom = 169.0
 text = "Region Border Colour:"
 
 [node name="BorderColourPicker" type="ColorPickerButton" parent="VBoxContainer/SettingsGrid"]
-margin_left = 143.0
+margin_left = 162.0
 margin_top = 152.0
-margin_right = 343.0
+margin_right = 362.0
 margin_bottom = 172.0
 mouse_default_cursor_shape = 2
 color = Color( 0.717647, 0.223529, 1, 1 )
 
 [node name="PreviewBorderLabel" type="Label" parent="VBoxContainer/SettingsGrid"]
 margin_top = 181.0
-margin_right = 139.0
+margin_right = 158.0
 margin_bottom = 195.0
 text = "Preview Guide File"
 
 [node name="PreviewBorderCheckbox" type="CheckBox" parent="VBoxContainer/SettingsGrid"]
-margin_left = 143.0
+margin_left = 162.0
 margin_top = 176.0
-margin_right = 343.0
+margin_right = 362.0
 margin_bottom = 200.0
 pressed = true
 
