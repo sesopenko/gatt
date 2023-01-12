@@ -57,37 +57,37 @@ func generate_and_display_2x2()->void:
 	_rendered_guide.create(dimensions.x, dimensions.y, false, Image.FORMAT_RGBA8)
 	
 	var set: Array = TileTemplate.get_2x2()
-	var num_regions_2x2 := 4
+	var num_subtiles := 4
 	
 	var border_width:int = _border_width_control.value as int
-	var dimensions_per_region: int = _block_dimensions * 2
+	var dimensions_per_subtile: int = _block_dimensions * 2
 	
 	
 	for i in set.size():
-		var region = set[i]
-		var region_x:int = posmod(i, num_regions_2x2)
-		var region_y:int = floor(i / num_regions_2x2)
-		var region_offset_x:int = region_x * dimensions_per_region
-		var region_offset_y:int = region_y * dimensions_per_region
+		var subtile = set[i]
+		var subtile_x:int = posmod(i, num_subtiles)
+		var subtile_y:int = floor(i / num_subtiles)
+		var subtile_offset_x:int = subtile_x * dimensions_per_subtile
+		var subtile_offset_y:int = subtile_y * dimensions_per_subtile
 		
-		for bi in region.size():
+		for bi in subtile.size():
 			var tile_color = _floor_colour
-			if region[bi]:
+			if subtile[bi]:
 				tile_color = _wall_colour
 			var blit_x:int = posmod(bi, 2)
 			var blit_y:int = floor(bi / 2)
-			var blit_offset_x:int = region_offset_x + (blit_x * (_block_dimensions))
-			var blit_offset_y:int = region_offset_y + (blit_y * (_block_dimensions))
+			var blit_offset_x:int = subtile_offset_x + (blit_x * (_block_dimensions))
+			var blit_offset_y:int = subtile_offset_y + (blit_y * (_block_dimensions))
 			var tile_rect:Rect2 = Rect2(blit_offset_x, blit_offset_y, _block_dimensions, _block_dimensions)
 			_rendered_template.fill_rect(tile_rect, tile_color)
-		# Draw guide for region
-		var top_rect := Rect2(region_offset_x, region_offset_y, dimensions_per_region, border_width)
+		# Draw guide for subtile
+		var top_rect := Rect2(subtile_offset_x, subtile_offset_y, dimensions_per_subtile, border_width)
 		_rendered_guide.fill_rect(top_rect, _border_colour)
-		var left_rect := Rect2(region_offset_x, region_offset_y, border_width, dimensions_per_region)
+		var left_rect := Rect2(subtile_offset_x, subtile_offset_y, border_width, dimensions_per_subtile)
 		_rendered_guide.fill_rect(top_rect, _border_colour)
-		var right_rect := Rect2(region_offset_x + dimensions_per_region - border_width, region_offset_y, border_width, dimensions_per_region)
+		var right_rect := Rect2(subtile_offset_x + dimensions_per_subtile - border_width, subtile_offset_y, border_width, dimensions_per_subtile)
 		_rendered_guide.fill_rect(right_rect, _border_colour)
-		var bottom_rect := Rect2(region_offset_x, region_offset_y + dimensions_per_region - border_width, dimensions_per_region, border_width)
+		var bottom_rect := Rect2(subtile_offset_x, subtile_offset_y + dimensions_per_subtile - border_width, dimensions_per_subtile, border_width)
 		_rendered_guide.fill_rect(bottom_rect, _border_colour)
 	
 	merge_images_and_display()
@@ -103,38 +103,38 @@ func generate_and_display_3x3()->void:
 	
 	var set: Array = TileTemplate.get_3x3()
 	
-	var tiles_per_region_dimension = 3
+	var tiles_per_subtile_dimension = 3
 	var border_width:int = _border_width_control.value as int
-	var dimensions_per_region: int = _block_dimensions * tiles_per_region_dimension
+	var dimensions_per_subtile: int = _block_dimensions * tiles_per_subtile_dimension
 	
-	var regions_dimensions_x:int = 12
-	var regions_dimensions_y:int = 4
+	var subtiles_dimensions_x:int = 12
+	var subtiles_dimensions_y:int = 4
 	
-	for region_y in regions_dimensions_y:
-		for region_x in regions_dimensions_x:
-			var region_index:int = posmod(region_x, regions_dimensions_x) + region_y * regions_dimensions_x
-			var region = set[region_index]
-			var region_offset_x:int = region_x * dimensions_per_region
-			var region_offset_y:int = region_y * dimensions_per_region
+	for subtile_y in subtiles_dimensions_y:
+		for subtile_x in subtiles_dimensions_x:
+			var subtile_index:int = posmod(subtile_x, subtiles_dimensions_x) + subtile_y * subtiles_dimensions_x
+			var subtile = set[subtile_index]
+			var subtile_offset_x:int = subtile_x * dimensions_per_subtile
+			var subtile_offset_y:int = subtile_y * dimensions_per_subtile
 			
-			for blit_x in tiles_per_region_dimension:
-				for blit_y in tiles_per_region_dimension:
-					var ri:int = blit_y * tiles_per_region_dimension + posmod(blit_x, tiles_per_region_dimension)
+			for blit_x in tiles_per_subtile_dimension:
+				for blit_y in tiles_per_subtile_dimension:
+					var ri:int = blit_y * tiles_per_subtile_dimension + posmod(blit_x, tiles_per_subtile_dimension)
 					var tile_color = _floor_colour
-					if region[ri]:
+					if subtile[ri]:
 						tile_color = _wall_colour
-					var blit_offset_x:int = region_offset_x + (blit_x * (_block_dimensions))
-					var blit_offset_y:int = region_offset_y + (blit_y * (_block_dimensions))
+					var blit_offset_x:int = subtile_offset_x + (blit_x * (_block_dimensions))
+					var blit_offset_y:int = subtile_offset_y + (blit_y * (_block_dimensions))
 					var tile_rect:Rect2 = Rect2(blit_offset_x, blit_offset_y, _block_dimensions, _block_dimensions)
 					_rendered_template.fill_rect(tile_rect, tile_color)
-			# Draw guide for region
-			var top_rect := Rect2(region_offset_x, region_offset_y, dimensions_per_region, border_width)
+			# Draw guide for subtile
+			var top_rect := Rect2(subtile_offset_x, subtile_offset_y, dimensions_per_subtile, border_width)
 			_rendered_guide.fill_rect(top_rect, _border_colour)
-			var left_rect := Rect2(region_offset_x, region_offset_y, border_width, dimensions_per_region)
+			var left_rect := Rect2(subtile_offset_x, subtile_offset_y, border_width, dimensions_per_subtile)
 			_rendered_guide.fill_rect(top_rect, _border_colour)
-			var right_rect := Rect2(region_offset_x + dimensions_per_region - border_width, region_offset_y, border_width, dimensions_per_region)
+			var right_rect := Rect2(subtile_offset_x + dimensions_per_subtile - border_width, subtile_offset_y, border_width, dimensions_per_subtile)
 			_rendered_guide.fill_rect(right_rect, _border_colour)
-			var bottom_rect := Rect2(region_offset_x, region_offset_y + dimensions_per_region - border_width, dimensions_per_region, border_width)
+			var bottom_rect := Rect2(subtile_offset_x, subtile_offset_y + dimensions_per_subtile - border_width, dimensions_per_subtile, border_width)
 			_rendered_guide.fill_rect(bottom_rect, _border_colour)
 	
 	merge_images_and_display()
