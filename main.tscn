@@ -16,7 +16,7 @@ final_image_display_path = NodePath("VBoxContainer/FinalImageContainer/ScrollCon
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 713.0
-margin_bottom = 571.0
+margin_bottom = 599.0
 grow_horizontal = 2
 size_flags_horizontal = 3
 size_flags_vertical = 2
@@ -30,7 +30,7 @@ align = 1
 
 [node name="SettingsGrid" type="GridContainer" parent="VBoxContainer"]
 margin_right = 706.0
-margin_bottom = 148.0
+margin_bottom = 176.0
 size_flags_horizontal = 3
 columns = 2
 
@@ -46,7 +46,7 @@ margin_right = 706.0
 margin_bottom = 20.0
 mouse_default_cursor_shape = 2
 text = "2x2"
-items = [ "2x2", null, false, 0, null ]
+items = [ "2x2", null, false, 0, null, "3x3", null, false, 1, null ]
 selected = 0
 
 [node name="SizeLabel" type="Label" parent="VBoxContainer/SettingsGrid"]
@@ -124,10 +124,23 @@ margin_bottom = 148.0
 mouse_default_cursor_shape = 2
 color = Color( 1, 1, 1, 1 )
 
-[node name="FinalImageContainer" type="VBoxContainer" parent="VBoxContainer"]
+[node name="PreviewBorderLabel" type="Label" parent="VBoxContainer/SettingsGrid"]
+margin_top = 157.0
+margin_right = 628.0
+margin_bottom = 171.0
+text = "Preview Guide File"
+
+[node name="PreviewBorderCheckbox" type="CheckBox" parent="VBoxContainer/SettingsGrid"]
+margin_left = 632.0
 margin_top = 152.0
 margin_right = 706.0
-margin_bottom = 512.0
+margin_bottom = 176.0
+pressed = true
+
+[node name="FinalImageContainer" type="VBoxContainer" parent="VBoxContainer"]
+margin_top = 180.0
+margin_right = 706.0
+margin_bottom = 540.0
 grow_horizontal = 2
 
 [node name="FinalLabel" type="Label" parent="VBoxContainer/FinalImageContainer"]
@@ -181,9 +194,9 @@ margin_bottom = 20.0
 text = "Save Guide File"
 
 [node name="Copyright" type="Label" parent="VBoxContainer"]
-margin_top = 516.0
+margin_top = 544.0
 margin_right = 706.0
-margin_bottom = 540.0
+margin_bottom = 568.0
 rect_min_size = Vector2( 0, 24 )
 text = "Copyright © Sean Esopenko"
 align = 1
@@ -191,9 +204,9 @@ valign = 2
 
 [node name="License" type="Button" parent="VBoxContainer"]
 margin_left = 305.0
-margin_top = 544.0
+margin_top = 572.0
 margin_right = 400.0
-margin_bottom = 564.0
+margin_bottom = 592.0
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -206,6 +219,7 @@ text = "View License"
 [connection signal="color_changed" from="VBoxContainer/SettingsGrid/WallColourPicker" to="." method="_on_value_changed"]
 [connection signal="value_changed" from="VBoxContainer/SettingsGrid/BorderSpinbox" to="." method="_on_value_changed"]
 [connection signal="color_changed" from="VBoxContainer/SettingsGrid/BorderColourPicker" to="." method="_on_value_changed"]
+[connection signal="toggled" from="VBoxContainer/SettingsGrid/PreviewBorderCheckbox" to="." method="_on_PreviewBorderCheckbox_toggled"]
 [connection signal="pressed" from="VBoxContainer/FinalImageContainer/HBoxContainer/SaveButton" to="." method="_on_SaveButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/FinalImageContainer/HBoxContainer/SaveGuideButton" to="." method="_on_SaveGuideButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/License" to="." method="_on_License_pressed"]
