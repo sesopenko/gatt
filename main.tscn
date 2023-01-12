@@ -16,7 +16,7 @@ final_image_display_path = NodePath("VBoxContainer/FinalImageContainer/ScrollCon
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 713.0
-margin_bottom = 595.0
+margin_bottom = 589.0
 grow_horizontal = 2
 size_flags_horizontal = 3
 size_flags_vertical = 2
@@ -30,7 +30,7 @@ align = 1
 [node name="SettingsGrid" type="GridContainer" parent="VBoxContainer"]
 margin_top = 18.0
 margin_right = 706.0
-margin_bottom = 190.0
+margin_bottom = 166.0
 size_flags_horizontal = 3
 columns = 2
 
@@ -79,7 +79,7 @@ margin_top = 52.0
 margin_right = 706.0
 margin_bottom = 72.0
 mouse_default_cursor_shape = 2
-color = Color( 0.52549, 0.0627451, 0.0627451, 1 )
+color = Color( 0, 0, 1, 1 )
 
 [node name="WallLabel" type="Label" parent="VBoxContainer/SettingsGrid"]
 margin_top = 79.0
@@ -124,24 +124,10 @@ margin_bottom = 148.0
 mouse_default_cursor_shape = 2
 color = Color( 1, 1, 1, 1 )
 
-[node name="TileBorderColourLabel" type="Label" parent="VBoxContainer/SettingsGrid"]
-margin_top = 155.0
-margin_right = 628.0
-margin_bottom = 169.0
-text = "Tile Border Colour:"
-
-[node name="TileBorderColourPicker" type="ColorPickerButton" parent="VBoxContainer/SettingsGrid"]
-margin_left = 632.0
-margin_top = 152.0
-margin_right = 706.0
-margin_bottom = 172.0
-mouse_default_cursor_shape = 2
-color = Color( 0.611765, 0.611765, 0.611765, 1 )
-
 [node name="FinalImageContainer" type="VBoxContainer" parent="VBoxContainer"]
-margin_top = 194.0
+margin_top = 170.0
 margin_right = 706.0
-margin_bottom = 536.0
+margin_bottom = 530.0
 grow_horizontal = 2
 
 [node name="FinalLabel" type="Label" parent="VBoxContainer/FinalImageContainer"]
@@ -168,17 +154,36 @@ size_flags_horizontal = 2
 size_flags_vertical = 0
 texture = ExtResource( 2 )
 
-[node name="SaveButton" type="Button" parent="VBoxContainer/FinalImageContainer"]
+[node name="Label" type="Label" parent="VBoxContainer/FinalImageContainer"]
 margin_top = 322.0
 margin_right = 706.0
-margin_bottom = 342.0
+margin_bottom = 336.0
+text = "The template file is used in Godot. The guide file is used in your graphics program as an optional layer."
+align = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/FinalImageContainer"]
+margin_top = 340.0
+margin_right = 706.0
+margin_bottom = 360.0
+alignment = 1
+
+[node name="SaveButton" type="Button" parent="VBoxContainer/FinalImageContainer/HBoxContainer"]
+margin_left = 230.0
+margin_right = 362.0
+margin_bottom = 20.0
 mouse_default_cursor_shape = 2
 text = "Save Template File"
 
+[node name="SaveGuideButton" type="Button" parent="VBoxContainer/FinalImageContainer/HBoxContainer"]
+margin_left = 366.0
+margin_right = 476.0
+margin_bottom = 20.0
+text = "Save Guide File"
+
 [node name="Copyright" type="Label" parent="VBoxContainer"]
-margin_top = 540.0
+margin_top = 534.0
 margin_right = 706.0
-margin_bottom = 564.0
+margin_bottom = 558.0
 rect_min_size = Vector2( 0, 24 )
 text = "Copyright © Sean Esopenko"
 align = 1
@@ -186,9 +191,9 @@ valign = 2
 
 [node name="License" type="Button" parent="VBoxContainer"]
 margin_left = 305.0
-margin_top = 568.0
+margin_top = 562.0
 margin_right = 400.0
-margin_bottom = 588.0
+margin_bottom = 582.0
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -196,10 +201,11 @@ text = "View License"
 
 [connection signal="file_selected" from="SaveDialog" to="." method="_on_SaveDialog_file_selected"]
 [connection signal="item_selected" from="VBoxContainer/SettingsGrid/TemplateTypeOptionButton" to="." method="_on_value_changed"]
-[connection signal="value_changed" from="VBoxContainer/SettingsGrid/SizeSetting" to="." method="_on_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/SettingsGrid/SizeSetting" to="." method="_on_SizeSetting_value_changed"]
 [connection signal="color_changed" from="VBoxContainer/SettingsGrid/FloorColourPicker" to="." method="_on_value_changed"]
 [connection signal="color_changed" from="VBoxContainer/SettingsGrid/WallColourPicker" to="." method="_on_value_changed"]
 [connection signal="value_changed" from="VBoxContainer/SettingsGrid/BorderSpinbox" to="." method="_on_value_changed"]
 [connection signal="color_changed" from="VBoxContainer/SettingsGrid/BorderColourPicker" to="." method="_on_value_changed"]
-[connection signal="pressed" from="VBoxContainer/FinalImageContainer/SaveButton" to="." method="_on_SaveButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/FinalImageContainer/HBoxContainer/SaveButton" to="." method="_on_SaveButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/FinalImageContainer/HBoxContainer/SaveGuideButton" to="." method="_on_SaveGuideButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/License" to="." method="_on_License_pressed"]
