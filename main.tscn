@@ -266,6 +266,7 @@ text = "Open Github"
 [connection signal="value_changed" from="VBoxContainer/SettingsGrid/SizeSetting" to="." method="_on_SizeSetting_value_changed"]
 [connection signal="color_changed" from="VBoxContainer/SettingsGrid/FloorColourPicker" to="." method="_on_value_changed"]
 [connection signal="color_changed" from="VBoxContainer/SettingsGrid/WallColourPicker" to="." method="_on_value_changed"]
+[connection signal="color_changed" from="VBoxContainer/SettingsGrid/SideWallColourPicker" to="." method="_on_value_changed"]
 [connection signal="value_changed" from="VBoxContainer/SettingsGrid/BorderSpinbox" to="." method="_on_value_changed"]
 [connection signal="color_changed" from="VBoxContainer/SettingsGrid/BorderColourPicker" to="." method="_on_value_changed"]
 [connection signal="toggled" from="VBoxContainer/SettingsGrid/PreviewBorderCheckbox" to="." method="_on_PreviewBorderCheckbox_toggled"]
