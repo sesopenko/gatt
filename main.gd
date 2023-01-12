@@ -142,19 +142,19 @@ func generate_and_display_3x3()->void:
 
 func get_dimensions()->Vector2:
 	var border_width = _border_width_control.value as int
-	var num_sections_x = 1
-	var num_sections_y = 1
-	var tiles_per_section = 1
+	var num_subtiles_x = 1
+	var num_subtiles_y = 1
+	var blocks_per_subtile = 1
 	if _current_grid_mode == GRID_MODE.MODE_2X2:
-		num_sections_x = 4
-		num_sections_y = 4
-		tiles_per_section = 2
+		num_subtiles_x = 4
+		num_subtiles_y = 4
+		blocks_per_subtile = 2
 	elif _current_grid_mode == GRID_MODE.MODE_3X3_MINIMAL:
-		num_sections_x = 12
-		num_sections_y = 4
-		tiles_per_section = 3
-	var final_x = num_sections_x * tiles_per_section * _block_dimensions
-	var final_y = num_sections_y * tiles_per_section * _block_dimensions
+		num_subtiles_x = 12
+		num_subtiles_y = 4
+		blocks_per_subtile = 3
+	var final_x = num_subtiles_x * blocks_per_subtile * _block_dimensions
+	var final_y = num_subtiles_y * blocks_per_subtile * _block_dimensions
 	return Vector2(final_x, final_y)
 
 func merge_images_and_display()->void:
