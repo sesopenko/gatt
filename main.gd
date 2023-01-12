@@ -4,34 +4,30 @@ enum GRID_MODE {MODE_2X2, MODE_3X3}
 
 export (NodePath) var final_image_display_path: NodePath
 
-var final_image_control: TextureRect
-
-var _size_label: Label
 onready var _size_control: SpinBox = $VBoxContainer/SettingsGrid/SizeSetting as SpinBox
 onready var _final_image_control: TextureRect = get_node(final_image_display_path) as TextureRect
 onready var _border_width_control: SpinBox = $VBoxContainer/SettingsGrid/BorderSpinbox as SpinBox
 onready var _preview_guide_control: CheckButton = $VBoxContainer/SettingsGrid/PreviewBorderCheckbox as CheckButton
+
+# These are where the rendered images are stored so they can be written to files when needed
+onready var _rendered_template: Image = Image.new()
+onready var _rendered_guide: Image = Image.new()
+
+# Using the same save dialog but keeping track of which file's being saved.
+var saving_guide: bool = false
+
+var _block_dimensions: int = 16
+var _current_grid_mode = GRID_MODE.MODE_2X2
 
 var floor_colour: Color
 var wall_colour: Color
 var border_colour: Color
 var _preview_guide_file: bool = true
 
-
-var _tile_dimensions: int = 16
-
 var _floor_colour: Color
 var _wall_colour: Color
 var _border_colour: Color
 var _tile_border_colour: Color
-
-onready var _rendered_template: Image = Image.new()
-onready var _rendered_guide: Image = Image.new()
-
-var saving_guide: bool = false
-
-var _current_grid_mode = GRID_MODE.MODE_2X2
-
 
 func _ready():
 	_reset_defaults_for_controls()
@@ -43,7 +39,7 @@ func _ready():
 	$VBoxContainer/Copyright.text = "Copyright © Sean Esopenko %s" % d["year"]
 	
 func _reset_defaults_for_controls()->void:
-	_size_control.value = _tile_dimensions
+	_size_control.value = _block_dimensions
 	
 func generate_and_display()->void:
 	_capture_settings()
@@ -53,7 +49,7 @@ func generate_and_display()->void:
 		generate_and_display_3x3()
 	
 func _on_HSlider_value_changed(value):
-	_tile_dimensions = floor(value) as int
+	_block_dimensions = floor(value) as int
 
 func get_set_2x2()->Array:
 	var squares = [
@@ -322,7 +318,7 @@ func generate_and_display_2x2()->void:
 	var num_regions_2x2 := 4
 	
 	var border_width:int = _border_width_control.value as int
-	var dimensions_per_region: int = _tile_dimensions * 2
+	var dimensions_per_region: int = _block_dimensions * 2
 	
 	
 	for i in set.size():
@@ -338,9 +334,9 @@ func generate_and_display_2x2()->void:
 				tile_color = _wall_colour
 			var blit_x:int = posmod(bi, 2)
 			var blit_y:int = floor(bi / 2)
-			var blit_offset_x:int = region_offset_x + (blit_x * (_tile_dimensions))
-			var blit_offset_y:int = region_offset_y + (blit_y * (_tile_dimensions))
-			var tile_rect:Rect2 = Rect2(blit_offset_x, blit_offset_y, _tile_dimensions, _tile_dimensions)
+			var blit_offset_x:int = region_offset_x + (blit_x * (_block_dimensions))
+			var blit_offset_y:int = region_offset_y + (blit_y * (_block_dimensions))
+			var tile_rect:Rect2 = Rect2(blit_offset_x, blit_offset_y, _block_dimensions, _block_dimensions)
 			_rendered_template.fill_rect(tile_rect, tile_color)
 		# Draw guide for region
 		var top_rect := Rect2(region_offset_x, region_offset_y, dimensions_per_region, border_width)
@@ -358,7 +354,7 @@ func generate_and_display_2x2()->void:
 	var display_texture = ImageTexture.new()
 	display_texture.create_from_image(display_img)
 	_final_image_control.texture = display_texture
-	$VBoxContainer/FinalImageContainer/HBoxContainer2/FinalLabel.text = "Subtile size: %d" % (_tile_dimensions * 2)
+	$VBoxContainer/FinalImageContainer/HBoxContainer2/FinalLabel.text = "Subtile size: %d" % (_block_dimensions * 2)
 	
 func generate_and_display_3x3()->void:
 	_capture_settings()
@@ -373,7 +369,7 @@ func generate_and_display_3x3()->void:
 	
 	var tiles_per_region_dimension = 3
 	var border_width:int = _border_width_control.value as int
-	var dimensions_per_region: int = _tile_dimensions * tiles_per_region_dimension
+	var dimensions_per_region: int = _block_dimensions * tiles_per_region_dimension
 	
 	var regions_dimensions_x:int = 12
 	var regions_dimensions_y:int = 4
@@ -391,9 +387,9 @@ func generate_and_display_3x3()->void:
 					var tile_color = _floor_colour
 					if region[ri]:
 						tile_color = _wall_colour
-					var blit_offset_x:int = region_offset_x + (blit_x * (_tile_dimensions))
-					var blit_offset_y:int = region_offset_y + (blit_y * (_tile_dimensions))
-					var tile_rect:Rect2 = Rect2(blit_offset_x, blit_offset_y, _tile_dimensions, _tile_dimensions)
+					var blit_offset_x:int = region_offset_x + (blit_x * (_block_dimensions))
+					var blit_offset_y:int = region_offset_y + (blit_y * (_block_dimensions))
+					var tile_rect:Rect2 = Rect2(blit_offset_x, blit_offset_y, _block_dimensions, _block_dimensions)
 					_rendered_template.fill_rect(tile_rect, tile_color)
 			# Draw guide for region
 			var top_rect := Rect2(region_offset_x, region_offset_y, dimensions_per_region, border_width)
@@ -411,7 +407,7 @@ func generate_and_display_3x3()->void:
 	var display_texture = ImageTexture.new()
 	display_texture.create_from_image(display_img)
 	_final_image_control.texture = display_texture
-	$VBoxContainer/FinalImageContainer/HBoxContainer2/FinalLabel.text = "Subtile size: %d" % (_tile_dimensions * 3)
+	$VBoxContainer/FinalImageContainer/HBoxContainer2/FinalLabel.text = "Subtile size: %d" % (_block_dimensions * 3)
 
 func _capture_settings()->void:
 	_floor_colour = $VBoxContainer/SettingsGrid/FloorColourPicker.get_picker().color
@@ -430,14 +426,14 @@ func get_dimensions()->Vector2:
 		var num_sections = 4
 		var num_tiles = num_sections * 2
 		var num_borders = num_sections
-		var total_width = (_tile_dimensions * num_tiles)
+		var total_width = (_block_dimensions * num_tiles)
 		
 		return Vector2(total_width, total_width)
 	elif _current_grid_mode == GRID_MODE.MODE_3X3:
 		var num_sections_x = 12
 		var num_sections_y = 4
 		var num_tiles = 3
-		return Vector2(num_sections_x * num_tiles * _tile_dimensions, num_sections_y * num_tiles * _tile_dimensions)
+		return Vector2(num_sections_x * num_tiles * _block_dimensions, num_sections_y * num_tiles * _block_dimensions)
 		
 	else:
 		return Vector2(1,1)
@@ -479,7 +475,7 @@ func _on_License_pressed():
 	OS.shell_open("https://raw.githubusercontent.com/sesopenko/gatt/main/COPYING.txt")
 
 func _on_SizeSetting_value_changed(value):
-	_tile_dimensions = value as int
+	_block_dimensions = value as int
 	generate_and_display()
 
 
