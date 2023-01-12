@@ -190,7 +190,6 @@ func _on_SaveGuideButton_pressed():
 	saving_guide = true
 	$SaveDialog.popup_centered_clamped()
 
-
 func _on_SaveDialog_file_selected(path):
 	var img_to_save:Image = _rendered_guide if saving_guide else _rendered_template
 	var err := img_to_save.save_png(path)
@@ -208,13 +207,9 @@ func _on_SaveDialog_file_selected(path):
 func _on_value_changed(value):
 	generate_and_display()
 
-func _on_License_pressed():
-	OS.shell_open("https://raw.githubusercontent.com/sesopenko/gatt/main/COPYING.txt")
-
 func _on_SizeSetting_value_changed(value):
 	_block_dimensions = value as int
 	generate_and_display()
-
 
 func _on_PreviewBorderCheckbox_pressed():
 	generate_and_display()
@@ -223,5 +218,8 @@ func _on_PreviewBorderCheckbox_toggled(button_pressed):
 	_preview_guide_file = button_pressed
 	generate_and_display()
 
+func _on_License_pressed():
+	OS.shell_open("https://raw.githubusercontent.com/sesopenko/gatt/main/COPYING.txt")
+	
 func _on_github_pressed():
 	OS.shell_open("https://github.com/sesopenko/gatt")
