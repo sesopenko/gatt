@@ -16,8 +16,8 @@ final_image_display_path = NodePath("VBoxContainer/FinalImageContainer/ScrollCon
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 713.0
-margin_bottom = 601.0
+margin_right = 1273.0
+margin_bottom = 625.0
 grow_horizontal = 2
 size_flags_horizontal = 3
 size_flags_vertical = 2
@@ -30,38 +30,39 @@ text = "Godot Autotile Texture Templater (GATT)"
 align = 1
 
 [node name="SettingsGrid" type="GridContainer" parent="VBoxContainer"]
-margin_right = 706.0
-margin_bottom = 176.0
-size_flags_horizontal = 3
+margin_left = 461.0
+margin_right = 804.0
+margin_bottom = 200.0
+size_flags_horizontal = 4
 columns = 2
 
 [node name="LabelType" type="Label" parent="VBoxContainer/SettingsGrid"]
 margin_top = 3.0
-margin_right = 502.0
+margin_right = 139.0
 margin_bottom = 17.0
 text = "Type:"
 
 [node name="TemplateTypeOptionButton" type="OptionButton" parent="VBoxContainer/SettingsGrid"]
-margin_left = 506.0
-margin_right = 706.0
+margin_left = 143.0
+margin_right = 343.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 200, 0 )
 mouse_default_cursor_shape = 2
 text = "2x2"
-items = [ "2x2", null, false, 0, null, "3x3 (minimal) - Generic", null, false, 1, null ]
+items = [ "2x2", null, false, 0, null, "3x3 (minimal) - Generic", null, false, 1, null, "3x3 top down - floors", null, false, 2, null ]
 selected = 0
 
 [node name="SizeLabel" type="Label" parent="VBoxContainer/SettingsGrid"]
 margin_top = 29.0
-margin_right = 502.0
+margin_right = 139.0
 margin_bottom = 43.0
 size_flags_horizontal = 3
 text = "Block Size"
 
 [node name="SizeSetting" type="SpinBox" parent="VBoxContainer/SettingsGrid"]
-margin_left = 506.0
+margin_left = 143.0
 margin_top = 24.0
-margin_right = 706.0
+margin_right = 343.0
 margin_bottom = 48.0
 min_value = 1.0
 max_value = 256.0
@@ -70,85 +71,102 @@ rounded = true
 
 [node name="FloorLabel" type="Label" parent="VBoxContainer/SettingsGrid"]
 margin_top = 55.0
-margin_right = 502.0
+margin_right = 139.0
 margin_bottom = 69.0
 size_flags_horizontal = 3
 text = "Floor Colour:"
 
 [node name="FloorColourPicker" type="ColorPickerButton" parent="VBoxContainer/SettingsGrid"]
-margin_left = 506.0
+margin_left = 143.0
 margin_top = 52.0
-margin_right = 706.0
+margin_right = 343.0
 margin_bottom = 72.0
 mouse_default_cursor_shape = 2
 color = Color( 0.129412, 0.533333, 0.0980392, 1 )
 
 [node name="WallLabel" type="Label" parent="VBoxContainer/SettingsGrid"]
 margin_top = 79.0
-margin_right = 502.0
+margin_right = 139.0
 margin_bottom = 93.0
 size_flags_horizontal = 3
-text = "Wall Colour:"
+text = "Top Wall Colour:"
 
 [node name="WallColourPicker" type="ColorPickerButton" parent="VBoxContainer/SettingsGrid"]
-margin_left = 506.0
+margin_left = 143.0
 margin_top = 76.0
-margin_right = 706.0
+margin_right = 343.0
 margin_bottom = 96.0
 mouse_default_cursor_shape = 2
 color = Color( 0.992157, 1, 0.223529, 1 )
 
+[node name="SideWallLabel" type="Label" parent="VBoxContainer/SettingsGrid"]
+margin_top = 103.0
+margin_right = 139.0
+margin_bottom = 117.0
+text = "Side Wall Colour:"
+
+[node name="SideWallColourPicker" type="ColorPickerButton" parent="VBoxContainer/SettingsGrid"]
+margin_left = 143.0
+margin_top = 100.0
+margin_right = 343.0
+margin_bottom = 120.0
+color = Color( 0.223529, 1, 0.952941, 1 )
+
 [node name="BorderLabel" type="Label" parent="VBoxContainer/SettingsGrid"]
-margin_top = 105.0
-margin_right = 502.0
-margin_bottom = 119.0
+margin_top = 129.0
+margin_right = 139.0
+margin_bottom = 143.0
 size_flags_horizontal = 3
 text = "Border Pixels:"
 
 [node name="BorderSpinbox" type="SpinBox" parent="VBoxContainer/SettingsGrid"]
-margin_left = 506.0
-margin_top = 100.0
-margin_right = 706.0
-margin_bottom = 124.0
+margin_left = 143.0
+margin_top = 124.0
+margin_right = 343.0
+margin_bottom = 148.0
 max_value = 10.0
 value = 1.0
 
 [node name="BorderColourLabel" type="Label" parent="VBoxContainer/SettingsGrid"]
-margin_top = 131.0
-margin_right = 502.0
-margin_bottom = 145.0
+margin_top = 155.0
+margin_right = 139.0
+margin_bottom = 169.0
 text = "Region Border Colour:"
 
 [node name="BorderColourPicker" type="ColorPickerButton" parent="VBoxContainer/SettingsGrid"]
-margin_left = 506.0
-margin_top = 128.0
-margin_right = 706.0
-margin_bottom = 148.0
+margin_left = 143.0
+margin_top = 152.0
+margin_right = 343.0
+margin_bottom = 172.0
 mouse_default_cursor_shape = 2
 color = Color( 0.717647, 0.223529, 1, 1 )
 
 [node name="PreviewBorderLabel" type="Label" parent="VBoxContainer/SettingsGrid"]
-margin_top = 157.0
-margin_right = 502.0
-margin_bottom = 171.0
+margin_top = 181.0
+margin_right = 139.0
+margin_bottom = 195.0
 text = "Preview Guide File"
 
 [node name="PreviewBorderCheckbox" type="CheckBox" parent="VBoxContainer/SettingsGrid"]
-margin_left = 506.0
-margin_top = 152.0
-margin_right = 706.0
-margin_bottom = 176.0
+margin_left = 143.0
+margin_top = 176.0
+margin_right = 343.0
+margin_bottom = 200.0
 pressed = true
 
 [node name="FinalImageContainer" type="VBoxContainer" parent="VBoxContainer"]
-margin_top = 180.0
-margin_right = 706.0
-margin_bottom = 550.0
+margin_left = 83.0
+margin_top = 204.0
+margin_right = 1183.0
+margin_bottom = 574.0
 grow_horizontal = 2
+size_flags_horizontal = 4
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/FinalImageContainer"]
-margin_right = 706.0
+margin_left = 318.0
+margin_right = 781.0
 margin_bottom = 14.0
+size_flags_horizontal = 4
 
 [node name="FinalLabel" type="Label" parent="VBoxContainer/FinalImageContainer/HBoxContainer2"]
 margin_right = 180.0
@@ -164,11 +182,11 @@ text = "(Choose this in tilemap and tileset settings)"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/FinalImageContainer"]
 margin_top = 18.0
-margin_right = 706.0
+margin_right = 1100.0
 margin_bottom = 318.0
 grow_horizontal = 2
 grow_vertical = 2
-rect_min_size = Vector2( 600, 300 )
+rect_min_size = Vector2( 1100, 300 )
 size_flags_horizontal = 3
 size_flags_vertical = 12
 
@@ -182,51 +200,51 @@ texture = ExtResource( 2 )
 
 [node name="Label" type="Label" parent="VBoxContainer/FinalImageContainer"]
 margin_top = 322.0
-margin_right = 706.0
+margin_right = 1100.0
 margin_bottom = 336.0
 text = "The template file is used in Godot. The guide file is used in your graphics program as an optional layer."
 align = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/FinalImageContainer"]
 margin_top = 340.0
-margin_right = 706.0
+margin_right = 1100.0
 margin_bottom = 370.0
 alignment = 1
 
 [node name="SaveButton" type="Button" parent="VBoxContainer/FinalImageContainer/HBoxContainer"]
-margin_left = 230.0
-margin_right = 362.0
+margin_left = 427.0
+margin_right = 559.0
 margin_bottom = 30.0
 rect_min_size = Vector2( 0, 30 )
 mouse_default_cursor_shape = 2
 text = "Save Template File"
 
 [node name="SaveGuideButton" type="Button" parent="VBoxContainer/FinalImageContainer/HBoxContainer"]
-margin_left = 366.0
-margin_right = 476.0
+margin_left = 563.0
+margin_right = 673.0
 margin_bottom = 30.0
 rect_min_size = Vector2( 0, 30 )
 text = "Save Guide File"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 554.0
-margin_right = 706.0
-margin_bottom = 594.0
+margin_top = 578.0
+margin_right = 1266.0
+margin_bottom = 618.0
 rect_min_size = Vector2( 0, 40 )
 alignment = 1
 
 [node name="Copyright" parent="VBoxContainer/HBoxContainer" instance=ExtResource( 4 )]
-margin_left = 141.0
+margin_left = 421.0
 margin_top = 13.0
-margin_right = 363.0
+margin_right = 643.0
 margin_bottom = 27.0
 align = 1
 valign = 2
 
 [node name="License" type="Button" parent="VBoxContainer/HBoxContainer"]
-margin_left = 367.0
+margin_left = 647.0
 margin_top = 10.0
-margin_right = 467.0
+margin_right = 747.0
 margin_bottom = 30.0
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 4
@@ -234,9 +252,9 @@ size_flags_vertical = 4
 text = "Open License"
 
 [node name="github" type="Button" parent="VBoxContainer/HBoxContainer"]
-margin_left = 471.0
+margin_left = 751.0
 margin_top = 10.0
-margin_right = 565.0
+margin_right = 845.0
 margin_bottom = 30.0
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 4
