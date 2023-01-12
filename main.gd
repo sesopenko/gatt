@@ -204,11 +204,9 @@ func _on_SaveDialog_file_selected(path):
 		dialog.dialog_text = "File Saved Successfully"
 	add_child(dialog)
 	dialog.popup_centered()
-	
 
 func _on_value_changed(value):
 	generate_and_display()
-
 
 func _on_License_pressed():
 	OS.shell_open("https://raw.githubusercontent.com/sesopenko/gatt/main/COPYING.txt")
@@ -221,11 +219,9 @@ func _on_SizeSetting_value_changed(value):
 func _on_PreviewBorderCheckbox_pressed():
 	generate_and_display()
 
-
 func _on_PreviewBorderCheckbox_toggled(button_pressed):
 	_preview_guide_file = button_pressed
 	generate_and_display()
-
 
 func _on_github_pressed():
 	OS.shell_open("https://github.com/sesopenko/gatt")
