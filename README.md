@@ -4,7 +4,7 @@ The autotile templates provided with the official godot documentation on [Autoti
 
 ## Download
 
-[Download the releases of the tool from itch.io](https://sesopenko.itch.io/gatt). The linux exports are untested!
+[Download the releases of the tool from itch.io](https://sesopenko.itch.io/gatt). The windows export is tested but linux is not, ymmv.
 
 ## Relevant Documentation
 
