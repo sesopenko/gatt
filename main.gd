@@ -16,7 +16,7 @@ onready var _rendered_guide: Image = Image.new()
 var saving_guide: bool = false
 
 var _block_dimensions: int = 16
-var _current_grid_mode = TileTemplate.GRID_MODE.MODE_2X2
+var _current_grid_mode = DataDb.TileTemplate.GRID_MODE.MODE_2X2
 
 var _preview_guide_file: bool = true
 
@@ -45,16 +45,34 @@ func _capture_settings()->void:
 	
 func generate_and_display()->void:
 	_capture_settings()
-	if _current_grid_mode == TileTemplate.GRID_MODE.MODE_2X2:
-		generate_and_display_2x2()
-	elif _current_grid_mode == TileTemplate.GRID_MODE.MODE_3X3_MINIMAL:
+	if _current_grid_mode == DataDb.TileTemplate.GRID_MODE.MODE_2X2:
+		_generate_and_display_with_db(_current_grid_mode)
+	elif _current_grid_mode == DataDb.TileTemplate.GRID_MODE.MODE_3X3_MINIMAL:
 		generate_and_display_3x3()
-	elif _current_grid_mode == TileTemplate.GRID_MODE.MODE_3X3_TOP_FLOOR:
+	elif _current_grid_mode == DataDb.TileTemplate.GRID_MODE.MODE_3X3_TOP_FLOOR:
 		generate_and_display_3x3_top_floor()
 		
 func _generate_and_display_with_db(grid_mode: int)->void:
 	_capture_settings()
-	var tile_template: TileTemplate = TileTemplate.build(grid_mode, _block_dimensions)
+	var tile_template: DataDb.TileTemplate = TileTemplateBuilder.build(grid_mode, _block_dimensions)
+	_prep_images_for_template(tile_template)
+	for subtile_y in (tile_template._template_subtile_qty.y) as int:
+		for subtile_x in (tile_template._template_subtile_qty.x) as int:
+			var subtile:Array = tile_template.get_subtile(subtile_x, subtile_y)
+			var subtile_offset: Vector2 = tile_template.get_subtile_offset(subtile_x, subtile_y)
+			for block_y in tile_template.subtile_dimension:
+				for block_x in tile_template.subtile_dimension:
+					var block = tile_template.get_block(subtile_x, subtile_y, block_x, block_y)
+					if block > 0:
+						var top_block_offset: Vector2 = tile_template.get_block_offset(block_x, block_y)
+						var top_block_dimension: Vector2 = tile_template.get_block_dimension_scalar(block_x, block_y)
+						# need to add tile offset
+						var top_block_rect: Rect2 = Rect2(
+							top_block_offset + subtile_offset,
+							top_block_dimension * _block_dimensions
+						)
+						_rendered_template.fill_rect(top_block_rect, _wall_colour)
+			
 	
 #	var dimensions = tile_template.
 func generate_and_display_2x2()->void:
@@ -239,13 +257,19 @@ func generate_and_display_3x3_top_floor()->void:
 					
 	merge_images_and_display()
 	_update_subtile_helper(dimensions_per_subtile)
-	
+
+## @Deprecated use _prep_images_for_template() instead
 func _prep_rendered_images()->void:
 	var dimensions = get_dimensions()
 	_rendered_template.create(dimensions.x, dimensions.y, false, Image.FORMAT_RGBA8)
 	_rendered_template.fill(_floor_colour)
 	_rendered_guide.create(dimensions.x, dimensions.y, false, Image.FORMAT_RGBA8)
-					
+
+func _prep_images_for_template(tile_template: DataDb.TileTemplate)->void:
+	var dimensions = tile_template.get_image_dimensions()
+	_rendered_template.create(dimensions.x, dimensions.y, false, Image.FORMAT_RGBA8)
+	_rendered_template.fill(_floor_colour)
+	_rendered_guide.create(dimensions.x, dimensions.y, false, Image.FORMAT_RGBA8)
 					
 func _update_subtile_helper(subtile_size: int)->void:
 	$VBoxContainer/FinalImageContainer/HBoxContainer2/FinalLabel.text = "Subtile size: %d" % subtile_size
@@ -255,15 +279,15 @@ func get_dimensions()->Vector2:
 	var num_subtiles_x = 1
 	var num_subtiles_y = 1
 	var blocks_per_subtile = 1
-	if _current_grid_mode == TileTemplate.GRID_MODE.MODE_2X2:
+	if _current_grid_mode == DataDb.TileTemplate.GRID_MODE.MODE_2X2:
 		num_subtiles_x = 4
 		num_subtiles_y = 4
 		blocks_per_subtile = 2
-	elif _current_grid_mode == TileTemplate.GRID_MODE.MODE_3X3_MINIMAL:
+	elif _current_grid_mode == DataDb.TileTemplate.GRID_MODE.MODE_3X3_MINIMAL:
 		num_subtiles_x = 12
 		num_subtiles_y = 4
 		blocks_per_subtile = 3
-	elif _current_grid_mode == TileTemplate.GRID_MODE.MODE_3X3_TOP_FLOOR:
+	elif _current_grid_mode == DataDb.TileTemplate.GRID_MODE.MODE_3X3_TOP_FLOOR:
 		num_subtiles_x = 12
 		num_subtiles_y = 4
 		var subtile_size:int = _block_dimensions * 2 + _block_dimensions * 2

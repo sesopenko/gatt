@@ -3,21 +3,21 @@ class_name TileTemplateBuilder
 
 # this has to be a separate class to get around self reference problems.
 
-static func build(grid_mode: int, block_size: int)->TileTemplate:
+static func build(grid_mode: int, block_size: int)->DataDb.TileTemplate:
 	var set: Array
-	var offset_scalars: Array = TileTemplate.offset_scalar_map[grid_mode]
-	var dimension_scalars: Array = TileTemplate.dimension_scalar_map[grid_mode]
+	var offset_scalars: Array = DataDb.TileTemplate.offset_scalar_map[grid_mode]
+	var dimension_scalars: Array = DataDb.TileTemplate.dimension_scalar_map[grid_mode]
 	var template_cell_qty: Vector2
-	if grid_mode == TileTemplate.GRID_MODEMODE_2X2:
+	if grid_mode == DataDb.TileTemplate.GRID_MODE.MODE_2X2:
 		set = get_2x2()
-		template_cell_qty = Vector2(12, 4)
-	elif grid_mode == TileTemplate.GRID_MODEMODE_3X3_MINIMAL:
+		template_cell_qty = Vector2(4, 4)
+	elif grid_mode == DataDb.TileTemplate.GRID_MODE.MODE_3X3_MINIMAL:
 		set = get_3x3()
 		template_cell_qty = Vector2(12, 4)
-	elif grid_mode == TileTemplate.GRID_MODEMODE_3X3_TOP_FLOOR:
+	elif grid_mode == DataDb.TileTemplate.GRID_MODE.MODE_3X3_TOP_FLOOR:
 		set = get_3x3_top_floor()
 		template_cell_qty = Vector2(4, 4)
-	return TileTemplate.new(block_size, set, offset_scalars, dimension_scalars, template_cell_qty)
+	return DataDb.TileTemplate.new(block_size, set, offset_scalars, dimension_scalars, template_cell_qty)
 
 static func get_2x2()->Array:
 	# Provides all the possible combinations for 2x2
