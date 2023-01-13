@@ -35,6 +35,7 @@ jobs:
   export_game:
     # Always use ubuntu-latest for this action
     runs-on: ubuntu-latest
+    needs: [unit_test]
     # Job name, can be anything
     name: Export Game
     strategy:
