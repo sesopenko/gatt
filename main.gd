@@ -70,6 +70,14 @@ func _generate_and_display_with_db(grid_mode: int)->void:
 							top_block_dimension
 						)
 						_rendered_template.fill_rect(top_block_rect, _wall_colour)
+						var wall_offset := tile_template.get_wall_offset(block_x, block_y)
+						if wall_offset != DataDb.NO_WALL:
+							var wall_dimension := tile_template.get_wall_dimension(block_x, block_y)
+							var wall_rect := Rect2(
+								subtile_offset + wall_offset,
+								wall_dimension
+							)
+							_rendered_template.fill_rect(wall_rect, _side_wall_colour)
 			# Draw guide for subtile
 			var top_rect := Rect2(subtile_offset.x, subtile_offset.y, tile_template.subtile_dimension, border_width)
 			_rendered_guide.fill_rect(top_rect, _border_colour)

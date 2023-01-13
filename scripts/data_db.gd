@@ -11,7 +11,7 @@ static func build(build_spec: Dictionary)->TileTemplate:
 	var block_size: int = build_spec[BUILD_SPEC.BLOCK_SIZE]
 	var offset_scalars: Array = TileTemplate.offset_scalar_map[grid_mode]
 	var dimension_scalars: Array = TileTemplate.dimension_scalar_map[grid_mode]
-	var wall_scalar: int = TileTemplate.wall_scalar_map[grid_mode]
+	var wall_scalar: float = TileTemplate.wall_scalar_map[grid_mode]
 	var template_cell_qty: Vector2
 	if grid_mode == TileTemplate.GRID_MODE.MODE_2X2:
 		set = get_2x2()
@@ -44,7 +44,7 @@ class TileTemplate:
 	## The dimension of a given subtile (width or height)
 	var subtile_dimension: int setget, _get_subtile_dimension
 	
-	var _wall_scalar: int = 0
+	var _wall_scalar: float = 0
 
 	## The number of blocks spanning a subtile (in both x and y, these are symmetrical)
 	var num_blocks_per_subtile: int setget , _get_num_blocks_per_subtile
@@ -69,7 +69,7 @@ class TileTemplate:
 
 	## Builds a TileTemplate database.
 		
-	func _init(block_size: int, init_set: Array, offset_scalars:Array, dimension_scalars: Array, input_template_subtile_qty: Vector2, wall_scalar: int):
+	func _init(block_size: int, init_set: Array, offset_scalars:Array, dimension_scalars: Array, input_template_subtile_qty: Vector2, wall_scalar: float):
 		set = init_set
 		_block_size = block_size
 		_offset_scalars = offset_scalars
@@ -116,6 +116,8 @@ class TileTemplate:
 		return offset
 		
 	func get_wall_dimension(block_x: int, block_y: int)->Vector2:
+		if _wall_scalar <= 0:
+			return Vector2(0,0)
 		var dimension := Vector2(
 			_dimension_scalars[block_x] * _block_size,
 			floor(_wall_scalar as float * _block_size as float) as int

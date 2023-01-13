@@ -327,7 +327,7 @@ func test_get_block_dimension(build_spec: Dictionary, block_x: int, block_y: int
 	# assert
 	assert_vector2(result).is_equal(expected_dimension)
 	
-func test_get_wall_offset(build_spec: Dictionary, block_x: int, block_y: int, expected_dimensions: Vector2, test_parameters := [
+func test_get_wall_offset(build_spec: Dictionary, block_x: int, block_y: int, expected_offset: Vector2, test_parameters := [
 	[
 		{
 			DataDb.BUILD_SPEC.BLOCK_SIZE: 16,
@@ -416,4 +416,79 @@ func test_get_wall_offset(build_spec: Dictionary, block_x: int, block_y: int, ex
 	var result := sut.get_wall_offset(block_x, block_y)
 	
 	# assert
-	assert_vector2(result).is_equal(expected_dimensions)
+	assert_vector2(result).is_equal(expected_offset)
+	
+func test_get_wall_dimension(build_spec: Dictionary, block_x: int, block_y: int, expected_dimension: Vector2, test_parameters := [
+	[
+		{
+			DataDb.BUILD_SPEC.BLOCK_SIZE: 16,
+			DataDb.BUILD_SPEC.GRID_MODE: DataDb.TileTemplate.GRID_MODE.MODE_2X2,
+		},
+		0, 0,
+		DataDb.NO_WALL
+	],
+	[
+		{
+			DataDb.BUILD_SPEC.BLOCK_SIZE: 16,
+			DataDb.BUILD_SPEC.GRID_MODE: DataDb.TileTemplate.GRID_MODE.MODE_2X2,
+		},
+		1, 1,
+		DataDb.NO_WALL
+	],
+	[
+		{
+			DataDb.BUILD_SPEC.BLOCK_SIZE: 16,
+			DataDb.BUILD_SPEC.GRID_MODE: DataDb.TileTemplate.GRID_MODE.MODE_3X3_MINIMAL,
+		},
+		1, 1,
+		DataDb.NO_WALL
+	],
+	[
+		{
+			DataDb.BUILD_SPEC.BLOCK_SIZE: 16,
+			DataDb.BUILD_SPEC.GRID_MODE: DataDb.TileTemplate.GRID_MODE.MODE_3X3_TOP_FLOOR,
+		},
+		0, 0,
+		Vector2(16, 24)
+	],
+	[
+		{
+			DataDb.BUILD_SPEC.BLOCK_SIZE: 16,
+			DataDb.BUILD_SPEC.GRID_MODE: DataDb.TileTemplate.GRID_MODE.MODE_3X3_TOP_FLOOR,
+		},
+		1, 0,
+		Vector2(16 * 2, 24)
+	],
+	[
+		{
+			DataDb.BUILD_SPEC.BLOCK_SIZE: 16,
+			DataDb.BUILD_SPEC.GRID_MODE: DataDb.TileTemplate.GRID_MODE.MODE_3X3_TOP_FLOOR,
+		},
+		2, 0,
+		Vector2(16, 24)
+	],
+	[
+		{
+			DataDb.BUILD_SPEC.BLOCK_SIZE: 16,
+			DataDb.BUILD_SPEC.GRID_MODE: DataDb.TileTemplate.GRID_MODE.MODE_3X3_TOP_FLOOR,
+		},
+		0, 1,
+		Vector2(16, 24)
+	],
+	[
+		{
+			DataDb.BUILD_SPEC.BLOCK_SIZE: 16,
+			DataDb.BUILD_SPEC.GRID_MODE: DataDb.TileTemplate.GRID_MODE.MODE_3X3_TOP_FLOOR,
+		},
+		1, 1,
+		Vector2(32, 24)
+	],
+])->void:
+	# arrange
+	var sut := DataDb.build(build_spec)
+	
+	# act
+	var result := sut.get_wall_dimension(block_x, block_y)
+	
+	# assert
+	assert_vector2(result).is_equal(expected_dimension)
