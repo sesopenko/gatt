@@ -29,6 +29,8 @@ jobs:
 
     - name: run unit tests
       id: run_unit_tests
+      env:
+        GODOT_BIN: /usr/local/bin/godot
       run: |
         chmod a+x runtest.sh && ./runtest.sh
       
