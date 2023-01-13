@@ -406,7 +406,7 @@ func test_get_wall_offset(build_spec: Dictionary, block_x: int, block_y: int, ex
 			DataDb.BUILD_SPEC.GRID_MODE: DataDb.TileTemplate.GRID_MODE.MODE_3X3_TOP_FLOOR,
 		},
 		0, 2,
-		Vector2(0, 16 + 16 + 16 * 2)
+		DataDb.NO_WALL
 	],
 ])->void:
 	# arrange

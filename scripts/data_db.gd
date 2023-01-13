@@ -113,6 +113,8 @@ class TileTemplate:
 		offset += Vector2(
 			0, tile_dimension.y
 		)
+		if offset.y >= subtile_dimension:
+			return NO_WALL
 		return offset
 		
 	func get_wall_dimension(block_x: int, block_y: int)->Vector2:
