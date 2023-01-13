@@ -552,10 +552,11 @@ class TileTemplate:
 		
 
 	func get_block_offset(block_x:int, block_y: int)->Vector2:
-		return Vector2(
-			block_x as float * _offset_scalars[block_x] as float,
-			block_y as float * _offset_scalars[block_y] as float
+		var offset := Vector2(
+			_offset_scalars[block_x] as float * _block_size,
+			_offset_scalars[block_y] as float * _block_size
 		)
+		return offset
 		
 	func get_block_dimension_scalar(block_x:int, block_y: int)->Vector2:
 		return Vector2(

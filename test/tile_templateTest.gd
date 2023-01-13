@@ -79,7 +79,7 @@ func test_get_subtile(input_build_spec: Dictionary, input_x: int, input_y: int, 
 	assert_array(result).has_size(expected_array.size())
 	assert_array(result).is_equal(expected_array)
 	
-func test_get_block_offset(input_build_spec: Dictionary, subtile_x: int, subtile_y: int, block_x: int, block_y: int, expected_block: int, test_parameters := [
+func test_get_block(input_build_spec: Dictionary, subtile_x: int, subtile_y: int, block_x: int, block_y: int, expected_block: int, test_parameters := [
 		[
 			{
 				DataDb.BUILD_SPEC.BLOCK_SIZE: 16,
@@ -214,3 +214,71 @@ func test_get_block_offset(input_build_spec: Dictionary, subtile_x: int, subtile
 	var block: int = sut.get_block(subtile_x, subtile_y, block_x, block_y)
 	# Assert
 	assert_int(block).is_equal(expected_block)
+
+func test_get_block_offset(build_spec: Dictionary, block_x: int, block_y: int, expected_offset: Vector2, test_parameters := [
+	[
+		{
+				DataDb.BUILD_SPEC.BLOCK_SIZE: 16,
+				DataDb.BUILD_SPEC.GRID_MODE: DataDb.TileTemplate.GRID_MODE.MODE_2X2,
+			},
+		0, 0,
+		Vector2(0, 0)
+	],
+	[
+		{
+				DataDb.BUILD_SPEC.BLOCK_SIZE: 16,
+				DataDb.BUILD_SPEC.GRID_MODE: DataDb.TileTemplate.GRID_MODE.MODE_2X2,
+			},
+		1, 0,
+		Vector2(16, 0)
+	],
+	[
+		{
+				DataDb.BUILD_SPEC.BLOCK_SIZE: 16,
+				DataDb.BUILD_SPEC.GRID_MODE: DataDb.TileTemplate.GRID_MODE.MODE_3X3_MINIMAL,
+			},
+		2, 0,
+		Vector2(32, 0)
+	],
+	[
+		{
+				DataDb.BUILD_SPEC.BLOCK_SIZE: 16,
+				DataDb.BUILD_SPEC.GRID_MODE: DataDb.TileTemplate.GRID_MODE.MODE_3X3_TOP_FLOOR,
+			},
+		2, 0,
+		Vector2(48, 0)
+	],
+	[
+		{
+				DataDb.BUILD_SPEC.BLOCK_SIZE: 16,
+				DataDb.BUILD_SPEC.GRID_MODE: DataDb.TileTemplate.GRID_MODE.MODE_3X3_TOP_FLOOR,
+			},
+		2, 2,
+		Vector2(48, 48)
+	],
+	[
+		{
+				DataDb.BUILD_SPEC.BLOCK_SIZE: 16,
+				DataDb.BUILD_SPEC.GRID_MODE: DataDb.TileTemplate.GRID_MODE.MODE_3X3_TOP_FLOOR,
+			},
+		1, 1,
+		Vector2(16, 16)
+	],
+	[
+		{
+				DataDb.BUILD_SPEC.BLOCK_SIZE: 16,
+				DataDb.BUILD_SPEC.GRID_MODE: DataDb.TileTemplate.GRID_MODE.MODE_3X3_TOP_FLOOR,
+			},
+		0, 0,
+		Vector2(0, 0)
+	],
+])->void:
+	pass
+	# Arrange
+	var sut: DataDb.TileTemplate = DataDb.build(build_spec)
+	
+	# Act
+	var offset: Vector2 = sut.get_block_offset(block_x, block_y)
+	
+	# Assert
+	assert_vector2(offset).is_equal(expected_offset)
