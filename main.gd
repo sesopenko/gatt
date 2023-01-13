@@ -48,9 +48,9 @@ func generate_and_display()->void:
 		
 func _generate_and_display_with_db(grid_mode: int)->void:
 	_capture_settings()
-	var tile_template: DataDb.TileTemplate = TileTemplateBuilder.build({
-		TileTemplateBuilder.BUILD_SPEC.BLOCK_SIZE: _block_dimensions,
-		TileTemplateBuilder.BUILD_SPEC.GRID_MODE: grid_mode,
+	var tile_template: DataDb.TileTemplate = DataDb.build({
+		DataDb.BUILD_SPEC.BLOCK_SIZE: _block_dimensions,
+		DataDb.BUILD_SPEC.GRID_MODE: grid_mode,
 	})
 	_prep_images_for_template(tile_template)
 	for subtile_y in (tile_template.template_subtile_qty.y) as int:
@@ -79,7 +79,7 @@ func generate_and_display_2x2()->void:
 	
 	_prep_rendered_images()
 	
-	var set: Array = TileTemplateBuilder.get_2x2()
+	var set: Array = DataDb.get_2x2()
 	var num_subtiles := 4
 	
 	var border_width:int = _border_width_control.value as int
@@ -122,7 +122,7 @@ func generate_and_display_3x3()->void:
 	var dimensions = get_dimensions()
 	_prep_rendered_images()
 	
-	var set: Array = TileTemplateBuilder.get_3x3()
+	var set: Array = DataDb.get_3x3()
 	
 	var blocks_per_subtile_dimension = 3
 	var border_width:int = _border_width_control.value as int
@@ -180,7 +180,7 @@ func generate_and_display_3x3_top_floor()->void:
 	var subtiles_dimensions_x:int = 12
 	var subtiles_dimensions_y:int = 4
 	
-	var set: Array = TileTemplateBuilder.get_3x3_top_floor()
+	var set: Array = DataDb.get_3x3_top_floor()
 	
 	# Offset map for blocks 0, 1, 2 in each subtile
 	var subtile_block_offset_map:Array = [

@@ -669,11 +669,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/gdUnit3/src/fuzzers/StringFuzzer.gd"
 }, {
-"base": "Node",
-"class": "TileTemplateBuilder",
-"language": "GDScript",
-"path": "res://scripts/tile_template_builder.gd"
-}, {
 "base": "GdUnitTestSuite",
 "class": "TileTemplateTest",
 "language": "GDScript",
@@ -847,7 +842,6 @@ _global_script_class_icons={
 "RichTextLabelExt": "",
 "SignalHandler": "",
 "StringFuzzer": "",
-"TileTemplateBuilder": "",
 "TileTemplateTest": "",
 "TimeUnit": "",
 "ValueProvider": "",
