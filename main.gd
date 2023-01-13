@@ -1,6 +1,5 @@
 extends PanelContainer
 
-enum GRID_MODE {MODE_2X2, MODE_3X3_MINIMAL, MODE_3X3_TOP_FLOOR}
 
 export (NodePath) var final_image_display_path: NodePath
 
@@ -17,7 +16,7 @@ onready var _rendered_guide: Image = Image.new()
 var saving_guide: bool = false
 
 var _block_dimensions: int = 16
-var _current_grid_mode = GRID_MODE.MODE_2X2
+var _current_grid_mode = TileTemplate.GRID_MODE.MODE_2X2
 
 var _preview_guide_file: bool = true
 
@@ -46,20 +45,25 @@ func _capture_settings()->void:
 	
 func generate_and_display()->void:
 	_capture_settings()
-	if _current_grid_mode == GRID_MODE.MODE_2X2:
+	if _current_grid_mode == TileTemplate.GRID_MODE.MODE_2X2:
 		generate_and_display_2x2()
-	elif _current_grid_mode == GRID_MODE.MODE_3X3_MINIMAL:
+	elif _current_grid_mode == TileTemplate.GRID_MODE.MODE_3X3_MINIMAL:
 		generate_and_display_3x3()
-	elif _current_grid_mode == GRID_MODE.MODE_3X3_TOP_FLOOR:
+	elif _current_grid_mode == TileTemplate.GRID_MODE.MODE_3X3_TOP_FLOOR:
 		generate_and_display_3x3_top_floor()
 		
+func _generate_and_display_with_db(grid_mode: int)->void:
+	_capture_settings()
+	var tile_template: TileTemplate = TileTemplate.build(grid_mode, _block_dimensions)
+	
+#	var dimensions = tile_template.
 func generate_and_display_2x2()->void:
 	_capture_settings()
 	var dimensions = get_dimensions()
 	
 	_prep_rendered_images()
 	
-	var set: Array = TileTemplate.get_2x2()
+	var set: Array = TileTemplateBuilder.get_2x2()
 	var num_subtiles := 4
 	
 	var border_width:int = _border_width_control.value as int
@@ -102,7 +106,7 @@ func generate_and_display_3x3()->void:
 	var dimensions = get_dimensions()
 	_prep_rendered_images()
 	
-	var set: Array = TileTemplate.get_3x3()
+	var set: Array = TileTemplateBuilder.get_3x3()
 	
 	var blocks_per_subtile_dimension = 3
 	var border_width:int = _border_width_control.value as int
@@ -160,7 +164,7 @@ func generate_and_display_3x3_top_floor()->void:
 	var subtiles_dimensions_x:int = 12
 	var subtiles_dimensions_y:int = 4
 	
-	var set: Array = TileTemplate.get_3x3_top_floor()
+	var set: Array = TileTemplateBuilder.get_3x3_top_floor()
 	
 	# Offset map for blocks 0, 1, 2 in each subtile
 	var subtile_block_offset_map:Array = [
@@ -251,15 +255,15 @@ func get_dimensions()->Vector2:
 	var num_subtiles_x = 1
 	var num_subtiles_y = 1
 	var blocks_per_subtile = 1
-	if _current_grid_mode == GRID_MODE.MODE_2X2:
+	if _current_grid_mode == TileTemplate.GRID_MODE.MODE_2X2:
 		num_subtiles_x = 4
 		num_subtiles_y = 4
 		blocks_per_subtile = 2
-	elif _current_grid_mode == GRID_MODE.MODE_3X3_MINIMAL:
+	elif _current_grid_mode == TileTemplate.GRID_MODE.MODE_3X3_MINIMAL:
 		num_subtiles_x = 12
 		num_subtiles_y = 4
 		blocks_per_subtile = 3
-	elif _current_grid_mode == GRID_MODE.MODE_3X3_TOP_FLOOR:
+	elif _current_grid_mode == TileTemplate.GRID_MODE.MODE_3X3_TOP_FLOOR:
 		num_subtiles_x = 12
 		num_subtiles_y = 4
 		var subtile_size:int = _block_dimensions * 2 + _block_dimensions * 2

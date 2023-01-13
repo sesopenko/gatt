@@ -13,9 +13,15 @@ _global_script_classes=[ {
 "class": "TileTemplate",
 "language": "GDScript",
 "path": "res://scripts/tile_template.gd"
+}, {
+"base": "Node",
+"class": "TileTemplateBuilder",
+"language": "GDScript",
+"path": "res://scripts/tile_template_builder.gd"
 } ]
 _global_script_class_icons={
-"TileTemplate": ""
+"TileTemplate": "",
+"TileTemplateBuilder": ""
 }
 
 [application]
