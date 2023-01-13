@@ -262,7 +262,7 @@ size_flags_vertical = 4
 text = "Open Github"
 
 [connection signal="file_selected" from="SaveDialog" to="." method="_on_SaveDialog_file_selected"]
-[connection signal="item_selected" from="VBoxContainer/SettingsGrid/TemplateTypeOptionButton" to="." method="_on_value_changed"]
+[connection signal="item_selected" from="VBoxContainer/SettingsGrid/TemplateTypeOptionButton" to="." method="_on_TemplateTypeOptionButton_item_selected"]
 [connection signal="value_changed" from="VBoxContainer/SettingsGrid/SizeSetting" to="." method="_on_SizeSetting_value_changed"]
 [connection signal="color_changed" from="VBoxContainer/SettingsGrid/FloorColourPicker" to="." method="_on_value_changed"]
 [connection signal="color_changed" from="VBoxContainer/SettingsGrid/WallColourPicker" to="." method="_on_value_changed"]

@@ -369,3 +369,8 @@ func _on_License_pressed():
 	
 func _on_github_pressed():
 	OS.shell_open("https://github.com/sesopenko/gatt")
+
+
+func _on_TemplateTypeOptionButton_item_selected(index):
+	_current_grid_mode = index
+	generate_and_display()
