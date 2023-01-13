@@ -54,6 +54,10 @@ func _generate_and_display_with_db(grid_mode: int)->void:
 		DataDb.BUILD_SPEC.GRID_MODE: grid_mode,
 	})
 	_prep_images_for_template(tile_template)
+	var left_rect: Rect2
+	var right_rect: Rect2
+	var top_rect: Rect2
+	var bottom_rect: Rect2
 	for subtile_y in (tile_template.template_subtile_qty.y) as int:
 		for subtile_x in (tile_template.template_subtile_qty.x) as int:
 			var subtile_offset: Vector2 = tile_template.get_subtile_offset(subtile_x, subtile_y)
@@ -79,16 +83,16 @@ func _generate_and_display_with_db(grid_mode: int)->void:
 							)
 							_rendered_template.fill_rect(wall_rect, _side_wall_colour)
 			# Draw guide for subtile
-			var top_rect := Rect2(subtile_offset.x, subtile_offset.y, tile_template.subtile_dimension, border_width)
+			top_rect = Rect2(subtile_offset.x, subtile_offset.y, tile_template.subtile_dimension, border_width)
 			_rendered_guide.fill_rect(top_rect, _border_colour)
-			var left_rect := Rect2(subtile_offset.x, subtile_offset.y, border_width, tile_template.subtile_dimension)
-			_rendered_guide.fill_rect(top_rect, _border_colour)
-			var right_rect := Rect2(subtile_offset.x + tile_template.subtile_dimension - border_width, subtile_offset.y, border_width, tile_template.subtile_dimension)
+			left_rect = Rect2(subtile_offset.x, subtile_offset.y, border_width, tile_template.subtile_dimension)
+			_rendered_guide.fill_rect(left_rect, _border_colour)
+			right_rect = Rect2(subtile_offset.x + tile_template.subtile_dimension - border_width, subtile_offset.y, border_width, tile_template.subtile_dimension)
 			_rendered_guide.fill_rect(right_rect, _border_colour)
-			var bottom_rect := Rect2(subtile_offset.x, subtile_offset.y + tile_template.subtile_dimension - border_width, tile_template.subtile_dimension, border_width)
+			bottom_rect = Rect2(subtile_offset.x, subtile_offset.y + tile_template.subtile_dimension - border_width, tile_template.subtile_dimension, border_width)
 			_rendered_guide.fill_rect(bottom_rect, _border_colour)
 	merge_images_and_display(tile_template)
-	_update_subtile_helper(_block_dimensions * 2)		
+	_update_subtile_helper(tile_template.subtile_dimension)
 	
 func _prep_images_for_template(tile_template: DataDb.TileTemplate)->void:
 	var dimensions = tile_template.get_image_dimensions()
