@@ -10,6 +10,16 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
 final_image_display_path = NodePath("VBoxContainer/FinalImageContainer/ScrollContainer/FinalImage")
+size_control_path = NodePath("VBoxContainer/SettingsGrid/SizeSetting")
+border_width_path = NodePath("VBoxContainer/SettingsGrid/BorderSpinbox")
+preview_guide_path = NodePath("VBoxContainer/SettingsGrid/PreviewBorderCheckbox")
+floor_colour_path = NodePath("VBoxContainer/SettingsGrid/FloorColourPicker")
+wall_colour_path = NodePath("VBoxContainer/SettingsGrid/WallColourPicker")
+border_colour_path = NodePath("VBoxContainer/SettingsGrid/BorderColourPicker")
+side_wall_colour_path = NodePath("VBoxContainer/SettingsGrid/SideWallColourPicker")
+tile_border_colour_path = NodePath("VBoxContainer/SettingsGrid/BorderColourPicker")
+current_grid_mode_path = NodePath("VBoxContainer/SettingsGrid/TemplateTypeOptionButton")
+final_label_path = NodePath("VBoxContainer/FinalImageContainer/HBoxContainer2/FinalLabel")
 
 [node name="SaveDialog" parent="." instance=ExtResource( 3 )]
 

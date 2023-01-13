@@ -2,11 +2,38 @@ extends PanelContainer
 
 
 export (NodePath) var final_image_display_path: NodePath
+export (NodePath) var size_control_path: NodePath
+export (NodePath) var border_width_path: NodePath
+export (NodePath) var preview_guide_path: NodePath
 
-onready var _size_control: SpinBox = $VBoxContainer/SettingsGrid/SizeSetting as SpinBox
+export (NodePath) var floor_colour_path: NodePath
+export (NodePath) var wall_colour_path: NodePath
+export (NodePath) var border_colour_path: NodePath
+export (NodePath) var side_wall_colour_path: NodePath
+export (NodePath) var tile_border_colour_path: NodePath
+export (NodePath) var current_grid_mode_path: NodePath
+
+export (NodePath) var final_label_path: NodePath
+
+
 onready var _final_image_control: TextureRect = get_node(final_image_display_path) as TextureRect
-onready var _border_width_control: SpinBox = $VBoxContainer/SettingsGrid/BorderSpinbox as SpinBox
-onready var _preview_guide_control: CheckButton = $VBoxContainer/SettingsGrid/PreviewBorderCheckbox as CheckButton
+onready var _size_control: SpinBox = get_node(size_control_path) as SpinBox
+onready var _border_width_control: SpinBox = get_node(border_width_path) as SpinBox
+onready var _preview_guide_control: CheckButton = get_node(preview_guide_path) as CheckButton
+
+onready var _floor_colour_control: ColorPickerButton = get_node(floor_colour_path) as ColorPickerButton
+onready var _wall_colour_control: ColorPickerButton = get_node(wall_colour_path) as ColorPickerButton
+onready var _border_colour_control: ColorPickerButton = get_node(border_colour_path) as ColorPickerButton
+onready var _side_wall_colour_control: ColorPickerButton = get_node(side_wall_colour_path) as ColorPickerButton
+onready var _grid_mode_control: OptionButton = get_node(current_grid_mode_path) as OptionButton
+
+onready var _final_label_control: Label = get_node(final_label_path) as Label
+
+var _floor_colour: Color
+var _wall_colour: Color
+var _border_colour: Color
+var _side_wall_colour: Color
+var _tile_border_colour: Color
 
 # These are where the rendered images are stored so they can be written to files when needed
 onready var _rendered_template: Image = Image.new()
@@ -20,12 +47,6 @@ var _current_grid_mode = DataDb.TileTemplate.GRID_MODE.MODE_2X2
 
 var _preview_guide_file: bool = true
 
-var _floor_colour: Color
-var _wall_colour: Color
-var _border_colour: Color
-var _side_wall_colour: Color
-var _tile_border_colour: Color
-
 func _ready():
 	_reset_defaults_for_controls()
 	_capture_settings()
@@ -33,14 +54,14 @@ func _ready():
 	
 func _reset_defaults_for_controls()->void:
 	_size_control.value = _block_dimensions
-	$VBoxContainer/SettingsGrid/TemplateTypeOptionButton.selected = _current_grid_mode
+	_grid_mode_control.selected = _current_grid_mode
 	
 func _capture_settings()->void:
-	_floor_colour = $VBoxContainer/SettingsGrid/FloorColourPicker.get_picker().color
-	_wall_colour = $VBoxContainer/SettingsGrid/WallColourPicker.get_picker().color
-	_border_colour = $VBoxContainer/SettingsGrid/BorderColourPicker.get_picker().color
-	_side_wall_colour = $VBoxContainer/SettingsGrid/SideWallColourPicker.get_picker().color
-	_current_grid_mode = $VBoxContainer/SettingsGrid/TemplateTypeOptionButton.selected
+	_floor_colour = _floor_colour_control.get_picker().color
+	_wall_colour = _wall_colour_control.get_picker().color
+	_border_colour = _border_colour_control.get_picker().color
+	_side_wall_colour = _side_wall_colour_control.get_picker().color
+	_current_grid_mode = _grid_mode_control.selected
 	
 	
 func generate_and_display()->void:
@@ -101,7 +122,7 @@ func _prep_images_for_template(tile_template: DataDb.TileTemplate)->void:
 	_rendered_guide.create(dimensions.x, dimensions.y, false, Image.FORMAT_RGBA8)
 					
 func _update_subtile_helper(subtile_size: int)->void:
-	$VBoxContainer/FinalImageContainer/HBoxContainer2/FinalLabel.text = "Subtile size: %d" % subtile_size
+	_final_label_control.text = "Subtile size: %d" % subtile_size
 
 
 func merge_images_and_display(tile_template: DataDb.TileTemplate)->void:
