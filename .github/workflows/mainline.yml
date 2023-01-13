@@ -6,6 +6,32 @@ on:
 
 jobs:
   # job id, can be anything
+  unit_test:
+    runs-on: ubuntu-latest
+    name: Unit Test
+    container:
+      image: docker://barichello/godot-ci:3.5.1
+    strategy:
+      fail-fast: true
+    steps:
+      # Always include the checkout step so that 
+      # your project is available for Godot to export
+    - name: checkout
+      uses: actions/checkout@v3.0.2
+      # Ensure that you get the entire project history
+      with:
+        fetch-depth: 0
+    # Automatically stores the tag name for later use
+    - name: get tag from version
+      id: tag_version
+      run: |
+        echo ::set-output name=TAG_VERSION::${GITHUB_REF#refs/tags/v}
+
+    - name: run unit tests
+      id: run_unit_tests
+      run: |
+        ./runtest.sh
+      
   export_game:
     # Always use ubuntu-latest for this action
     runs-on: ubuntu-latest
@@ -27,11 +53,7 @@ jobs:
       id: tag_version
       run: |
         echo ::set-output name=TAG_VERSION::${GITHUB_REF#refs/tags/v}
-    - name: unit test
-      id: unit_test
-      uses: abarichello/godot-ci@3.4.2
-      run: |
-        ./runtest.sh
+
     - name: export game
       id: export
       # Use latest version (see releases for all versions)
