@@ -48,7 +48,10 @@ func generate_and_display()->void:
 		
 func _generate_and_display_with_db(grid_mode: int)->void:
 	_capture_settings()
-	var tile_template: DataDb.TileTemplate = TileTemplateBuilder.build(grid_mode, _block_dimensions)
+	var tile_template: DataDb.TileTemplate = TileTemplateBuilder.build({
+		TileTemplateBuilder.BUILD_SPEC.BLOCK_SIZE: _block_dimensions,
+		TileTemplateBuilder.BUILD_SPEC.GRID_MODE: grid_mode,
+	})
 	_prep_images_for_template(tile_template)
 	for subtile_y in (tile_template.template_subtile_qty.y) as int:
 		for subtile_x in (tile_template.template_subtile_qty.x) as int:

@@ -3,8 +3,12 @@ class_name TileTemplateBuilder
 
 # this has to be a separate class to get around self reference problems.
 
-static func build(grid_mode: int, block_size: int)->DataDb.TileTemplate:
+enum BUILD_SPEC { GRID_MODE, BLOCK_SIZE}
+
+static func build(build_spec: Dictionary)->DataDb.TileTemplate:
 	var set: Array
+	var grid_mode: int = build_spec[BUILD_SPEC.GRID_MODE]
+	var block_size: int = build_spec[BUILD_SPEC.BLOCK_SIZE]
 	var offset_scalars: Array = DataDb.TileTemplate.offset_scalar_map[grid_mode]
 	var dimension_scalars: Array = DataDb.TileTemplate.dimension_scalar_map[grid_mode]
 	var template_cell_qty: Vector2
