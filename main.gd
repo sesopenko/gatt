@@ -60,8 +60,9 @@ func _generate_and_display_with_db(grid_mode: int)->void:
 		for subtile_x in (tile_template._template_subtile_qty.x) as int:
 			var subtile:Array = tile_template.get_subtile(subtile_x, subtile_y)
 			var subtile_offset: Vector2 = tile_template.get_subtile_offset(subtile_x, subtile_y)
-			for block_y in tile_template.subtile_dimension:
-				for block_x in tile_template.subtile_dimension:
+			# TODO: refactor this into a call, not direct property
+			for block_y in tile_template.num_blocks_per_subtile:
+				for block_x in tile_template.num_blocks_per_subtile:
 					var block = tile_template.get_block(subtile_x, subtile_y, block_x, block_y)
 					if block > 0:
 						var top_block_offset: Vector2 = tile_template.get_block_offset(block_x, block_y)
@@ -72,9 +73,9 @@ func _generate_and_display_with_db(grid_mode: int)->void:
 							top_block_dimension * _block_dimensions
 						)
 						_rendered_template.fill_rect(top_block_rect, _wall_colour)
-			
+	merge_images_and_display()
+	_update_subtile_helper(_block_dimensions * 2)		
 	
-#	var dimensions = tile_template.
 func generate_and_display_2x2()->void:
 	_capture_settings()
 	var dimensions = get_dimensions()

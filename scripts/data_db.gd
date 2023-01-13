@@ -64,6 +64,7 @@ class TileTemplate:
 			subtile_x * subtile_dimension,
 			subtile_y * subtile_dimension
 		)
+		
 
 	func get_block_offset(block_x:int, block_y: int)->Vector2:
 		return Vector2(
