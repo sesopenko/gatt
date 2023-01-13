@@ -3,12 +3,15 @@ class_name DataDb
 
 enum BUILD_SPEC { GRID_MODE, BLOCK_SIZE}
 
+const NO_WALL = Vector2(0,0)
+
 static func build(build_spec: Dictionary)->TileTemplate:
 	var set: Array
 	var grid_mode: int = build_spec[BUILD_SPEC.GRID_MODE]
 	var block_size: int = build_spec[BUILD_SPEC.BLOCK_SIZE]
 	var offset_scalars: Array = TileTemplate.offset_scalar_map[grid_mode]
 	var dimension_scalars: Array = TileTemplate.dimension_scalar_map[grid_mode]
+	var wall_scalar: int = TileTemplate.wall_scalar_map[grid_mode]
 	var template_cell_qty: Vector2
 	if grid_mode == TileTemplate.GRID_MODE.MODE_2X2:
 		set = get_2x2()
@@ -19,7 +22,7 @@ static func build(build_spec: Dictionary)->TileTemplate:
 	elif grid_mode == TileTemplate.GRID_MODE.MODE_3X3_TOP_FLOOR:
 		set = get_3x3_top_floor()
 		template_cell_qty = Vector2(12, 4)
-	return TileTemplate.new(block_size, set, offset_scalars, dimension_scalars, template_cell_qty)
+	return TileTemplate.new(block_size, set, offset_scalars, dimension_scalars, template_cell_qty, wall_scalar)
 
 ## Acts as database for querying tile template dimensional data.
 ## Mean to be constructed with the static build() method
@@ -40,6 +43,8 @@ class TileTemplate:
 
 	## The dimension of a given subtile (width or height)
 	var subtile_dimension: int setget, _get_subtile_dimension
+	
+	var _wall_scalar: int = 0
 
 	## The number of blocks spanning a subtile (in both x and y, these are symmetrical)
 	var num_blocks_per_subtile: int setget , _get_num_blocks_per_subtile
@@ -55,10 +60,16 @@ class TileTemplate:
 		GRID_MODE.MODE_3X3_MINIMAL: [1, 1, 1],
 		GRID_MODE.MODE_3X3_TOP_FLOOR: [1, 2, 1]
 	}
+	
+	const wall_scalar_map = {
+		GRID_MODE.MODE_2X2: 0,
+		GRID_MODE.MODE_3X3_MINIMAL: 0,
+		GRID_MODE.MODE_3X3_TOP_FLOOR: 1.5
+	}
 
 	## Builds a TileTemplate database.
 		
-	func _init(block_size: int, init_set: Array, offset_scalars:Array, dimension_scalars: Array, input_template_subtile_qty: Vector2):
+	func _init(block_size: int, init_set: Array, offset_scalars:Array, dimension_scalars: Array, input_template_subtile_qty: Vector2, wall_scalar: int):
 		set = init_set
 		_block_size = block_size
 		_offset_scalars = offset_scalars
@@ -66,6 +77,7 @@ class TileTemplate:
 		template_subtile_qty = input_template_subtile_qty
 		num_blocks_per_subtile = _offset_scalars.size()
 		subtile_dimension = _calculate_subtile_dimension()
+		_wall_scalar = wall_scalar
 		
 	func _get_num_blocks_per_subtile()->int:
 		return num_blocks_per_subtile
@@ -92,6 +104,23 @@ class TileTemplate:
 			_offset_scalars[block_y] as float * _block_size
 		)
 		return offset
+		
+	func get_wall_offset(block_x: int, block_y: int)->Vector2:
+		if _wall_scalar <= 0:
+			return Vector2(0,0)
+		var tile_dimension := get_block_dimension(block_x, block_y)
+		var offset := get_block_offset(block_x, block_y)
+		offset += Vector2(
+			0, tile_dimension.y
+		)
+		return offset
+		
+	func get_wall_dimension(block_x: int, block_y: int)->Vector2:
+		var dimension := Vector2(
+			_dimension_scalars[block_x] * _block_size,
+			floor(_wall_scalar as float * _block_size as float) as int
+		)
+		return dimension
 		
 	func get_block_dimension(block_x:int, block_y: int)->Vector2:
 		return Vector2(
