@@ -13,7 +13,7 @@ class TileTemplate:
 	var _dimension_scalars: Array
 
 	## The quantity of subtiles in each dimension of the template
-	var _template_subtile_qty: Vector2
+	var template_subtile_qty: Vector2
 
 	## the dimensions of the base block used to generate the template subtiles
 	var _block_size: int
@@ -38,12 +38,12 @@ class TileTemplate:
 
 	## Builds a TileTemplate database.
 		
-	func _init(block_size: int, init_set: Array, offset_scalars:Array, dimension_scalars: Array, template_subtile_qty: Vector2):
+	func _init(block_size: int, init_set: Array, offset_scalars:Array, dimension_scalars: Array, input_template_subtile_qty: Vector2):
 		set = init_set
 		_block_size = block_size
 		_offset_scalars = offset_scalars
 		_dimension_scalars = dimension_scalars
-		_template_subtile_qty = template_subtile_qty
+		template_subtile_qty = input_template_subtile_qty
 		num_blocks_per_subtile = _offset_scalars.size()
 		subtile_dimension = _calculate_subtile_dimension()
 		
@@ -57,7 +57,7 @@ class TileTemplate:
 		return subtile_dimension
 
 	func get_image_dimensions()->Vector2:
-		return _template_subtile_qty * subtile_dimension
+		return template_subtile_qty * subtile_dimension
 
 	func get_subtile_offset(subtile_x: int, subtile_y: int)->Vector2:
 		return Vector2(
@@ -95,7 +95,7 @@ class TileTemplate:
 		return dimension
 
 	func _get_subtile_index(subtile_x: int, subtile_y: int)->int:
-		return subtile_y * _template_subtile_qty.y as int + posmod(subtile_x, _template_subtile_qty.x)
+		return subtile_y * template_subtile_qty.y as int + posmod(subtile_x, template_subtile_qty.x)
 		
 	func _get_block_index(block_x: int, block_y: int)->int:
 		return (block_y * num_blocks_per_subtile + posmod(block_x, num_blocks_per_subtile)) as int

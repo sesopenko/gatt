@@ -16,3 +16,5 @@ func test_get_image_dimensions(input_blocksize: int, input_gridmode: int, expect
 	var sut = TileTemplateBuilder.build(input_gridmode, input_blocksize)
 	var image_dimensions_result = sut.get_image_dimensions()
 	assert_vector2(image_dimensions_result).is_equal(expected_dimensions)
+	
+	

@@ -44,20 +44,14 @@ func _capture_settings()->void:
 	
 	
 func generate_and_display()->void:
-	_capture_settings()
-	if _current_grid_mode == DataDb.TileTemplate.GRID_MODE.MODE_2X2:
-		_generate_and_display_with_db(_current_grid_mode)
-	elif _current_grid_mode == DataDb.TileTemplate.GRID_MODE.MODE_3X3_MINIMAL:
-		generate_and_display_3x3()
-	elif _current_grid_mode == DataDb.TileTemplate.GRID_MODE.MODE_3X3_TOP_FLOOR:
-		generate_and_display_3x3_top_floor()
+	_generate_and_display_with_db(_current_grid_mode)
 		
 func _generate_and_display_with_db(grid_mode: int)->void:
 	_capture_settings()
 	var tile_template: DataDb.TileTemplate = TileTemplateBuilder.build(grid_mode, _block_dimensions)
 	_prep_images_for_template(tile_template)
-	for subtile_y in (tile_template._template_subtile_qty.y) as int:
-		for subtile_x in (tile_template._template_subtile_qty.x) as int:
+	for subtile_y in (tile_template.template_subtile_qty.y) as int:
+		for subtile_x in (tile_template.template_subtile_qty.x) as int:
 			var subtile:Array = tile_template.get_subtile(subtile_x, subtile_y)
 			var subtile_offset: Vector2 = tile_template.get_subtile_offset(subtile_x, subtile_y)
 			# TODO: refactor this into a call, not direct property
