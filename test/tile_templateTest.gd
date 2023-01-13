@@ -59,6 +59,15 @@ func test_get_subtile(input_build_spec: Dictionary, input_x: int, input_y: int, 
 		1,
 		[0, 1,0, 1, 1, 1, 0, 1, 0],
 	],
+	[
+		{
+			DataDb.BUILD_SPEC.BLOCK_SIZE: 16,
+			DataDb.BUILD_SPEC.GRID_MODE: DataDb.TileTemplate.GRID_MODE.MODE_3X3_TOP_FLOOR,
+		},
+		2,
+		1,
+		[1,0,1,0,0,0,1,0,1],
+	],
 	
 ])->void:
 	# Arrange
@@ -69,3 +78,139 @@ func test_get_subtile(input_build_spec: Dictionary, input_x: int, input_y: int, 
 	# Assert
 	assert_array(result).has_size(expected_array.size())
 	assert_array(result).is_equal(expected_array)
+	
+func test_get_block_offset(input_build_spec: Dictionary, subtile_x: int, subtile_y: int, block_x: int, block_y: int, expected_block: int, test_parameters := [
+		[
+			{
+				DataDb.BUILD_SPEC.BLOCK_SIZE: 16,
+				DataDb.BUILD_SPEC.GRID_MODE: DataDb.TileTemplate.GRID_MODE.MODE_2X2,
+			},
+			0, 0,
+			0, 0,
+			0,
+		],
+		[
+			{
+				DataDb.BUILD_SPEC.BLOCK_SIZE: 16,
+				DataDb.BUILD_SPEC.GRID_MODE: DataDb.TileTemplate.GRID_MODE.MODE_2X2,
+			},
+			1, 1,
+			1, 1,
+			1,
+		],
+		[
+			{
+				DataDb.BUILD_SPEC.BLOCK_SIZE: 16,
+				DataDb.BUILD_SPEC.GRID_MODE: DataDb.TileTemplate.GRID_MODE.MODE_2X2,
+			},
+			2, 2,
+			0, 1,
+			0,
+		],
+		[
+			{
+				DataDb.BUILD_SPEC.BLOCK_SIZE: 16,
+				DataDb.BUILD_SPEC.GRID_MODE: DataDb.TileTemplate.GRID_MODE.MODE_3X3_MINIMAL,
+			},
+			7, 3,
+			0, 1,
+			1,
+		],
+		[
+			{
+				DataDb.BUILD_SPEC.BLOCK_SIZE: 16,
+				DataDb.BUILD_SPEC.GRID_MODE: DataDb.TileTemplate.GRID_MODE.MODE_3X3_MINIMAL,
+			},
+			7, 3,
+			0, 0,
+			0,
+		],
+		[
+			{
+				DataDb.BUILD_SPEC.BLOCK_SIZE: 16,
+				DataDb.BUILD_SPEC.GRID_MODE: DataDb.TileTemplate.GRID_MODE.MODE_3X3_MINIMAL,
+			},
+			10, 2,
+			0, 0,
+			1,
+		],
+		[
+			{
+				DataDb.BUILD_SPEC.BLOCK_SIZE: 16,
+				DataDb.BUILD_SPEC.GRID_MODE: DataDb.TileTemplate.GRID_MODE.MODE_3X3_MINIMAL,
+			},
+			10, 2,
+			1, 0,
+			1,
+		],
+		[
+			{
+				DataDb.BUILD_SPEC.BLOCK_SIZE: 16,
+				DataDb.BUILD_SPEC.GRID_MODE: DataDb.TileTemplate.GRID_MODE.MODE_3X3_MINIMAL,
+			},
+			10, 2,
+			2, 0,
+			0,
+		],
+		[
+			{
+				DataDb.BUILD_SPEC.BLOCK_SIZE: 16,
+				DataDb.BUILD_SPEC.GRID_MODE: DataDb.TileTemplate.GRID_MODE.MODE_3X3_MINIMAL,
+			},
+			10, 2,
+			0, 1,
+			1,
+		],
+		[
+			{
+				DataDb.BUILD_SPEC.BLOCK_SIZE: 16,
+				DataDb.BUILD_SPEC.GRID_MODE: DataDb.TileTemplate.GRID_MODE.MODE_3X3_MINIMAL,
+			},
+			10, 2,
+			1, 1,
+			1,
+		],
+		[
+			{
+				DataDb.BUILD_SPEC.BLOCK_SIZE: 16,
+				DataDb.BUILD_SPEC.GRID_MODE: DataDb.TileTemplate.GRID_MODE.MODE_3X3_MINIMAL,
+			},
+			10, 2,
+			2, 1,
+			1,
+		],
+		[
+			{
+				DataDb.BUILD_SPEC.BLOCK_SIZE: 16,
+				DataDb.BUILD_SPEC.GRID_MODE: DataDb.TileTemplate.GRID_MODE.MODE_3X3_MINIMAL,
+			},
+			10, 2,
+			0, 2,
+			0,
+		],
+		[
+			{
+				DataDb.BUILD_SPEC.BLOCK_SIZE: 16,
+				DataDb.BUILD_SPEC.GRID_MODE: DataDb.TileTemplate.GRID_MODE.MODE_3X3_MINIMAL,
+			},
+			10, 2,
+			1, 2,
+			1,
+		],
+		[
+			{
+				DataDb.BUILD_SPEC.BLOCK_SIZE: 16,
+				DataDb.BUILD_SPEC.GRID_MODE: DataDb.TileTemplate.GRID_MODE.MODE_3X3_MINIMAL,
+			},
+			10, 2,
+			2, 2,
+			1,
+		],
+])->void:
+	pass
+	# Arrange
+	var sut: DataDb.TileTemplate = DataDb.build(input_build_spec)
+	# Act
+	var block: int = sut.get_block(subtile_x, subtile_y, block_x, block_y)
+	# Assert
+	assert_int(block).is_equal(expected_block)
