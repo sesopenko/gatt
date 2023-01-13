@@ -27,7 +27,11 @@ jobs:
       id: tag_version
       run: |
         echo ::set-output name=TAG_VERSION::${GITHUB_REF#refs/tags/v}
-
+    - name: unit test
+      id: unit_test
+      uses: abarichello/godot-ci@3.4.2
+      run: |
+        ./runtest.sh
     - name: export game
       id: export
       # Use latest version (see releases for all versions)
