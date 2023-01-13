@@ -32,7 +32,7 @@ jobs:
       env:
         GODOT_BIN: /usr/local/bin/godot
       run: |
-        chmod a+x runtest.sh && ./runtest.sh
+        chmod a+x runtest.sh && ./runtest.sh -conf GdUnitRunner.cfg
       
   export_game:
     # Always use ubuntu-latest for this action
