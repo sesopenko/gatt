@@ -674,6 +674,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/tile_template_builder.gd"
 }, {
+"base": "GdUnitTestSuite",
+"class": "TileTemplateTest",
+"language": "GDScript",
+"path": "res://test/tile_templateTest.gd"
+}, {
 "base": "Resource",
 "class": "TimeUnit",
 "language": "GDScript",
@@ -843,6 +848,7 @@ _global_script_class_icons={
 "SignalHandler": "",
 "StringFuzzer": "",
 "TileTemplateBuilder": "",
+"TileTemplateTest": "",
 "TimeUnit": "",
 "ValueProvider": "",
 "Vector2Fuzzer": "",
@@ -865,6 +871,10 @@ config/icon="res://icon.png"
 
 window/size/width=1280
 window/size/height=630
+
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/gdUnit3/plugin.cfg" )
 
 [gui]
 

@@ -32,7 +32,7 @@ class TileTemplate:
 
 	const dimension_scalar_map = {
 		GRID_MODE.MODE_2X2: [1, 1],
-		GRID_MODE.MODE_3X3_MINIMAL: [1, 2, 1],
+		GRID_MODE.MODE_3X3_MINIMAL: [1, 1, 1],
 		GRID_MODE.MODE_3X3_TOP_FLOOR: [1, 2, 1]
 	}
 

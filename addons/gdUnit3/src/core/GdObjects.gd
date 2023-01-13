@@ -156,11 +156,59 @@ static func equals_sorted(obj_a :Array, obj_b :Array, case_sensitive :bool = fal
 	b.sort()
 	return equals(a, b, case_sensitive)
 
+
+static func is_type_equivalent(type_a, type_b) -> bool:
+	if GdUnitSettings.is_strict_number_type_compare():
+		return type_a == type_b
+	return (
+		(type_a == TYPE_REAL and type_b == TYPE_INT)
+		or (type_a == TYPE_INT and type_b == TYPE_REAL)
+		or type_a == type_b)
+
+# prototype of better object to dictionary
+static func obj2dict(obj :Object, hashed_objects := Dictionary()) -> Dictionary:
+	if obj == null:
+		return {}
+	var clazz_name := obj.get_class()
+	var dict := Dictionary()
+	var clazz_path := ""
+	
+	if is_instance_valid(obj) and obj.get_script() != null:
+		var d := inst2dict(obj)
+		clazz_path = d["@path"]
+		if d["@subpath"] != NodePath(""):
+			clazz_name = d["@subpath"]
+			dict["@inner_class"] = true
+		else:
+			clazz_name = clazz_path.get_file().replace(".gd", "")
+	dict["@path"] = clazz_path
+	
+	for property in obj.get_property_list():
+		var property_name = property["name"]
+		var property_type = property["type"]
+		var property_value = obj.get(property_name)
+		if property_value is GDScript:
+			continue
+		if (property["usage"] & PROPERTY_USAGE_SCRIPT_VARIABLE|PROPERTY_USAGE_DEFAULT
+			and not property["usage"] & PROPERTY_USAGE_CATEGORY
+			and not property["usage"] == 0):
+			if property_type == TYPE_OBJECT:
+				# prevent recursion
+				if hashed_objects.has(obj):
+					dict[property_name] = str(property_value)
+					continue
+				hashed_objects[obj] = true
+				dict[property_name] = obj2dict(property_value, hashed_objects)
+			else:
+				dict[property_name] = "%d:%s" % [property_type, property_value]
+	return {"%s" % clazz_name : dict}
+
+
 static func equals(obj_a, obj_b, case_sensitive :bool = false, deep_check :bool = true ) -> bool:
 	var type_a = typeof(obj_a)
 	var type_b = typeof(obj_b)
-	# is different types
-	if type_a != type_b:
+	# test for type equality if configured
+	if not is_type_equivalent(type_a, type_b):
 		return false
 	# is same instance
 	if obj_a == obj_b:
@@ -170,12 +218,19 @@ static func equals(obj_a, obj_b, case_sensitive :bool = false, deep_check :bool 
 		return false
 	if obj_b == null and obj_a != null:
 		return false
-
+	
 	match type_a:
 		TYPE_OBJECT:
 			if deep_check:
-				var a = var2str(obj_a) if obj_a.get_script() == null else inst2dict(obj_a)
-				var b = var2str(obj_b) if obj_b.get_script() == null else inst2dict(obj_b)
+				# prototype of better deep check
+				#return equals(obj2dict(obj_a), obj2dict(obj_b))
+				# fail fast
+				if not is_instance_valid(obj_a) or not is_instance_valid(obj_b):
+					return false
+				if obj_a.get_class() != obj_b.get_class():
+					return false
+				var a = inst2dict(obj_a) if is_instance_valid(obj_a) and obj_a.get_script() != null else var2str(obj_a)
+				var b = inst2dict(obj_b) if is_instance_valid(obj_b) and obj_b.get_script() != null else var2str(obj_b)
 				return str(a) == str(b)
 			return obj_a == obj_b
 		TYPE_ARRAY:
@@ -255,7 +310,7 @@ static func string_as_typeof(type :String) -> int:
 		for key in TYPE_AS_STRING_MAPPINGS.keys():
 			var value = TYPE_AS_STRING_MAPPINGS[key]
 			STRING_AS_TYPE_MAPPINGS[value] = key
-	return STRING_AS_TYPE_MAPPINGS.get(type, -1)
+	return STRING_AS_TYPE_MAPPINGS.get(type, TYPE_OBJECT)
 
 static func is_primitive_type(value) -> bool:
 	match typeof(value):

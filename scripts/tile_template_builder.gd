@@ -16,7 +16,7 @@ static func build(grid_mode: int, block_size: int)->DataDb.TileTemplate:
 		template_cell_qty = Vector2(12, 4)
 	elif grid_mode == DataDb.TileTemplate.GRID_MODE.MODE_3X3_TOP_FLOOR:
 		set = get_3x3_top_floor()
-		template_cell_qty = Vector2(4, 4)
+		template_cell_qty = Vector2(12, 4)
 	return DataDb.TileTemplate.new(block_size, set, offset_scalars, dimension_scalars, template_cell_qty)
 
 static func get_2x2()->Array:

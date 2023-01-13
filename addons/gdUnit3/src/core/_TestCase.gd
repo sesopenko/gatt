@@ -9,6 +9,7 @@ var _iterations: int = 1
 var _seed: int
 var _fuzzers: PoolStringArray = PoolStringArray()
 var _test_parameters := Array()
+var _test_param_index := -1
 var _line_number: int = -1
 var _script_path: String
 var _skipped := false
@@ -140,14 +141,20 @@ func skip(skipped :bool, error :String = "") -> void:
 func set_test_parameters(test_parameters :Array) -> void:
 	_test_parameters = test_parameters
 
+func set_test_parameter_index(index :int) -> void:
+	_test_param_index = index
+
 func test_parameters() -> Array:
 	return _test_parameters
+
+func test_parameter_index() -> int:
+	return _test_param_index
 
 func test_case_names() -> PoolStringArray:
 	var test_case_names :=  PoolStringArray()
 	var test_name = get_name()
-	for input_values in _test_parameters:
-		test_case_names.append("%s %s" % [test_name, str(input_values)])
+	for index in _test_parameters.size():
+		test_case_names.append("%s:%d %s" % [test_name, index, str(_test_parameters[index])])
 	return test_case_names
 
 func _to_string():

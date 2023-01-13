@@ -5,6 +5,18 @@ const WARN_COLOR = "#EFF883"
 const ERROR_COLOR = "#CD5C5C"
 const VALUE_COLOR = "#1E90FF"
 
+# improved version of InputEvent as text
+static func input_event_as_text(event :InputEvent) -> String:
+	var text := ""
+	if event is InputEventKey:
+		text += "InputEventKey : key='%s', pressed=%s, scancode=%d, physical_scancode=%s" % [event.as_text(), event.pressed, event.scancode, event.physical_scancode]
+	else:
+		text += event.as_text()
+	if event is InputEventMouse:
+		text += ", global_position %s" % event.global_position
+	if event is InputEventWithModifiers:
+		text += ", shift=%s, alt=%s, control=%s, meta=%s, command=%s" % [event.shift, event.alt, event.control, event.meta, event.command]
+	return text
 
 static func _warning(error:String) -> String:
 	return "[color=%s]%s[/color]" % [WARN_COLOR, error]
@@ -30,6 +42,10 @@ static func _current(value, delimiter ="\n") -> String:
 		TYPE_REAL:
 			return "'[color=%s]%f[/color]'" % [VALUE_COLOR, value]
 		TYPE_OBJECT:
+			if value == null:
+				return "'[color=%s]<null>[/color]'" % [VALUE_COLOR]
+			if value is InputEvent:
+				return "[color=%s]<%s>[/color]" % [VALUE_COLOR, input_event_as_text(value)]
 			#if value.has_method("_to_string"):
 			#	return "[color=%s]<%s>[/color]" % [VALUE_COLOR, value._to_string()]
 			return "[color=%s]<%s>[/color]" % [VALUE_COLOR, value.get_class()]
@@ -47,6 +63,10 @@ static func _expected(value, delimiter ="\n") -> String:
 		TYPE_REAL:
 			return "'[color=%s]%f[/color]'" % [VALUE_COLOR, value]
 		TYPE_OBJECT:
+			if value == null:
+				return "'[color=%s]<null>[/color]'" % [VALUE_COLOR]
+			if value is InputEvent:
+				return "[color=%s]<%s>[/color]" % [VALUE_COLOR, input_event_as_text(value)]
 			#if value.has_method("_to_string"):
 			#	return "[color=%s]<%s>[/color]" % [VALUE_COLOR, value._to_string()]
 			return "[color=%s]<%s>[/color]" % [VALUE_COLOR, value.get_class()]
@@ -307,6 +327,8 @@ static func error_signal_emitted(signal_name :String, args :Array, elapsed :Stri
 		return "%s %s but is emitted after %s" % [_error("Expecting do not emit signal:"), _current(signal_name + "()"), elapsed]
 	return "%s %s but is emitted after %s" % [_error("Expecting do not emit signal:"), _current(signal_name + "(" + str(args) + ")"), elapsed]
 
+static func error_await_signal_on_invalid_instance(source, signal_name :String, args :Array) -> String:
+	return "%s\n await_signal_on(%s, %s, %s)" % [_error("Invalid source! Can't await on signal:"), _current(source), signal_name, args]
 
 static func result_type(type :int) -> String:
 	match type:
@@ -331,7 +353,7 @@ static func error_no_more_interactions(summary :Dictionary) -> String:
 	for args in summary.keys():
 		var times :int = summary[args]
 		interactions.append(_format_arguments(args, times))
-	return "%s\n%s\n%s" % [_error("Expecting no more interacions!"), _error("But found interactions on:"), interactions.join("\n")] 
+	return "%s\n%s\n%s" % [_error("Expecting no more interactions!"), _error("But found interactions on:"), interactions.join("\n")]
 
 static func error_validate_interactions(current_interactions :Dictionary, expected_interactions :Dictionary) -> String:
 	var interactions := PoolStringArray()
@@ -339,7 +361,7 @@ static func error_validate_interactions(current_interactions :Dictionary, expect
 		var times :int = current_interactions[args]
 		interactions.append(_format_arguments(args, times))
 	var expected_interaction := _format_arguments(expected_interactions.keys()[0], expected_interactions.values()[0])
-	return "%s\n%s\n%s\n%s" % [_error("Expecting interacion on:"), expected_interaction, _error("But found interactions on:"), interactions.join("\n")]
+	return "%s\n%s\n%s\n%s" % [_error("Expecting interaction on:"), expected_interaction, _error("But found interactions on:"), interactions.join("\n")]
 
 static func _format_arguments(args :Array, times :int) -> String:
 	var fname :String = args[0]
@@ -348,10 +370,15 @@ static func _format_arguments(args :Array, times :int) -> String:
 	var fsignature := _current("%s(%s)" % [fname, typed_args.join(", ")])
 	return "	%s	%d time's" % [fsignature, times]
 
+static func _format_arg(arg) -> String:
+	if arg is InputEvent:
+		return input_event_as_text(arg)
+	return str(arg)
+
 static func _to_typed_args(args :Array) -> PoolStringArray:
 	var typed := PoolStringArray()
 	for arg in args:
-		typed.append( str(arg) + " :" + GdObjects.type_as_string(typeof(arg)))
+		typed.append(_format_arg(arg) + " :" + GdObjects.type_as_string(typeof(arg)))
 	return typed
 
 static func _find_first_diff( left :Array, right :Array) -> String:
