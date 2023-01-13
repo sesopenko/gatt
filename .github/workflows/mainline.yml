@@ -30,7 +30,7 @@ jobs:
     - name: run unit tests
       id: run_unit_tests
       run: |
-        ./runtest.sh
+        chmod a+x runtest.sh && ./runtest.sh
       
   export_game:
     # Always use ubuntu-latest for this action
