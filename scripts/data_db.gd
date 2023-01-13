@@ -93,10 +93,10 @@ class TileTemplate:
 		)
 		return offset
 		
-	func get_block_dimension_scalar(block_x:int, block_y: int)->Vector2:
+	func get_block_dimension(block_x:int, block_y: int)->Vector2:
 		return Vector2(
-			_dimension_scalars[block_x],
-			_dimension_scalars[block_y]
+			_dimension_scalars[block_x] * _block_size,
+			_dimension_scalars[block_y] * _block_size
 		)
 
 	func get_subtile(subtile_x:int, subtile_y: int)->Array:

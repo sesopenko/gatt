@@ -48,6 +48,7 @@ func generate_and_display()->void:
 		
 func _generate_and_display_with_db(grid_mode: int)->void:
 	_capture_settings()
+	var border_width:int = _border_width_control.value as int
 	var tile_template: DataDb.TileTemplate = DataDb.build({
 		DataDb.BUILD_SPEC.BLOCK_SIZE: _block_dimensions,
 		DataDb.BUILD_SPEC.GRID_MODE: grid_mode,
@@ -55,7 +56,6 @@ func _generate_and_display_with_db(grid_mode: int)->void:
 	_prep_images_for_template(tile_template)
 	for subtile_y in (tile_template.template_subtile_qty.y) as int:
 		for subtile_x in (tile_template.template_subtile_qty.x) as int:
-			var subtile:Array = tile_template.get_subtile(subtile_x, subtile_y)
 			var subtile_offset: Vector2 = tile_template.get_subtile_offset(subtile_x, subtile_y)
 			# TODO: refactor this into a call, not direct property
 			for block_y in tile_template.num_blocks_per_subtile:
@@ -63,13 +63,22 @@ func _generate_and_display_with_db(grid_mode: int)->void:
 					var block = tile_template.get_block(subtile_x, subtile_y, block_x, block_y)
 					if block > 0:
 						var top_block_offset: Vector2 = tile_template.get_block_offset(block_x, block_y)
-						var top_block_dimension: Vector2 = tile_template.get_block_dimension_scalar(block_x, block_y)
+						var top_block_dimension: Vector2 = tile_template.get_block_dimension(block_x, block_y)
 						# need to add tile offset
 						var top_block_rect: Rect2 = Rect2(
 							top_block_offset + subtile_offset,
-							top_block_dimension * _block_dimensions
+							top_block_dimension
 						)
 						_rendered_template.fill_rect(top_block_rect, _wall_colour)
+			# Draw guide for subtile
+			var top_rect := Rect2(subtile_offset.x, subtile_offset.y, tile_template.subtile_dimension, border_width)
+			_rendered_guide.fill_rect(top_rect, _border_colour)
+			var left_rect := Rect2(subtile_offset.x, subtile_offset.y, border_width, tile_template.subtile_dimension)
+			_rendered_guide.fill_rect(top_rect, _border_colour)
+			var right_rect := Rect2(subtile_offset.x + tile_template.subtile_dimension - border_width, subtile_offset.y, border_width, tile_template.subtile_dimension)
+			_rendered_guide.fill_rect(right_rect, _border_colour)
+			var bottom_rect := Rect2(subtile_offset.x, subtile_offset.y + tile_template.subtile_dimension - border_width, tile_template.subtile_dimension, border_width)
+			_rendered_guide.fill_rect(bottom_rect, _border_colour)
 	merge_images_and_display()
 	_update_subtile_helper(_block_dimensions * 2)		
 	
