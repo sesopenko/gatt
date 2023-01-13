@@ -11,6 +11,9 @@ The autotile templates provided with the official godot documentation on [Autoti
 ## Relevant Documentation
 
 * [Godot Autotiles](https://docs.godotengine.org/en/stable/tutorials/2d/using_tilemaps.html#autotiles)
+* [TileSet](https://docs.godotengine.org/en/stable/classes/class_tileset.html)
+* [Resources](https://docs.godotengine.org/en/stable/tutorials/scripting/resources.html)
+* [ResourceSaver](https://docs.godotengine.org/en/stable/classes/class_resourcesaver.html)
 
 ## Tips & Tricks
 
