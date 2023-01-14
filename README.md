@@ -2,7 +2,7 @@
 
 GATT - Godot Autotile Texture Templater generates texture templates for use with TileMap [autotiling](https://docs.godotengine.org/en/stable/tutorials/2d/using_tilemaps.html#autotiles).  Adds GATT to your bottom toolbar.  Choose from 2x2, 3x3 minimal and 3x3 minimal 3/4 view tilesets.  Configure a custom block size, colours, and floor patterns. Save 2 different images to your project: a texture which can be used directly in a Tileset plus a guidelines png with transparency which can act as a guide in a layer of your graphics software (ie: gimp).
 
-![screenshot](img/screenshot.png)
+![screenshot](addons/gatt/img/screenshot.png)
 
 ## Relevant Documentation
 
