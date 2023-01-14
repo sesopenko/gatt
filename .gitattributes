@@ -16,3 +16,8 @@
 # Denote all files that are truly binary and should not be modified.
 *.png binary
 *.jpg binary
+
+# Only include the addons folder when downloading from the Asset Library.
+/**        export-ignore
+/addons/gatt    !export-ignore
+/addons/gatt/** !export-ignore

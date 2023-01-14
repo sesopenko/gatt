@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/block_preview_placeholder.png-d05c4ab2fc2a3b4429723569ee0a2a0d.stex"
+path="res://.import/block_preview_placeholder.png-47bd3e65e39b6c53b51dd765185b0051.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/block_preview_placeholder.png"
-dest_files=[ "res://.import/block_preview_placeholder.png-d05c4ab2fc2a3b4429723569ee0a2a0d.stex" ]
+source_file="res://addons/gatt/assets/block_preview_placeholder.png"
+dest_files=[ "res://.import/block_preview_placeholder.png-47bd3e65e39b6c53b51dd765185b0051.stex" ]
 
 [params]
 

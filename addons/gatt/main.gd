@@ -1,3 +1,4 @@
+tool
 extends PanelContainer
 
 export (NodePath) var floor_maker_path: NodePath
