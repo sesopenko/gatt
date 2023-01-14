@@ -93,7 +93,7 @@ margin_right = 362.0
 margin_bottom = 48.0
 min_value = 4.0
 max_value = 256.0
-step = 2.0
+step = 8.0
 value = 32.0
 rounded = true
 
@@ -101,7 +101,7 @@ rounded = true
 margin_top = 55.0
 margin_right = 158.0
 margin_bottom = 69.0
-text = "Floor Type:"
+text = "Floor Style:"
 
 [node name="FloorTypeOption" type="OptionButton" parent="MarginContainer/VBoxContainer/AppContainer/BlockSettingsPanel/BlockSettingsHContainer/BlockSettingsGrid"]
 margin_left = 162.0
@@ -117,7 +117,7 @@ margin_top = 79.0
 margin_right = 158.0
 margin_bottom = 93.0
 size_flags_horizontal = 3
-text = "Floor 1"
+text = "Floor 1:"
 
 [node name="FloorColourPicker" type="ColorPickerButton" parent="MarginContainer/VBoxContainer/AppContainer/BlockSettingsPanel/BlockSettingsHContainer/BlockSettingsGrid"]
 margin_left = 162.0
@@ -218,6 +218,7 @@ margin_bottom = 280.0
 
 [node name="FloorMaker" parent="MarginContainer/VBoxContainer/AppContainer/BlockRenderContainer" instance=ExtResource( 5 )]
 margin_right = 886.0
+margin_bottom = 118.0
 type_option_button_path = NodePath("../../BlockSettingsPanel/BlockSettingsHContainer/BlockSettingsGrid/FloorTypeOption")
 color_picker_1_path = NodePath("../../BlockSettingsPanel/BlockSettingsHContainer/BlockSettingsGrid/FloorColourPicker")
 color_picker_2_path = NodePath("../../BlockSettingsPanel/BlockSettingsHContainer/BlockSettingsGrid/Floor2Picker")

@@ -1,4 +1,4 @@
-extends ScrollContainer
+extends VBoxContainer
 class_name FloorMaker
 
 signal new_floor_tile(floor_tile_image)
@@ -47,7 +47,7 @@ func _redraw()->void:
 	
 	var display_texture = ImageTexture.new()
 	display_texture.create_from_image(_floor_tile_image)
-	$BlockImage.texture = display_texture
+	$FloorMaker/BlockImage.texture = display_texture
 	emit_signal("new_floor_tile", _floor_tile_image)
 	
 func _on_type_option_selected(floor_type: int)->void:
@@ -71,9 +71,22 @@ func _create_floor_tile()->Image:
 	if _floor_type == FLOOR_TYPE.SOLID:
 		_fill_solid_block(floor_tile, _floor_color_1)
 	elif _floor_type == FLOOR_TYPE.CHECKERBOARD:
-		pass
+		_fill_checkerboard(floor_tile, _floor_color_1, _floor_color_2)
 	return floor_tile
 	
 func _fill_solid_block(block_image: Image, color: Color)->void:
 	block_image.fill_rect(Rect2(0, 0, block_image.get_width(), block_image.get_height()), color)
+	pass
+	
+func _fill_checkerboard(block_image: Image, color_1: Color, color_2: Color)->void:
+	var check_size:int = _block_size / 8
+	var image_width:int = block_image.get_width()
+	var image_height:int = block_image.get_height()
+	for y in (image_height / check_size) as int:
+		var flip: bool = true if posmod(y, 2) == 0 else false
+		for x in (image_width / check_size) as int:
+			flip = not flip
+			var rect := Rect2(x * check_size, y * check_size, check_size, check_size)
+			var color = color_1 if flip else color_2
+			block_image.fill_rect(rect, color)
 	pass
