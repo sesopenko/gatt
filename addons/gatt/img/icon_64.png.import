@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/use_in_godot.png-86ac6ebe7385cff37fbcdd62e96672b9.stex"
+path="res://.import/icon_64.png-064f340ecbdfb29ec7fb5578c5170ca1.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://img/use_in_godot.png"
-dest_files=[ "res://.import/use_in_godot.png-86ac6ebe7385cff37fbcdd62e96672b9.stex" ]
+source_file="res://addons/gatt/img/icon_64.png"
+dest_files=[ "res://.import/icon_64.png-064f340ecbdfb29ec7fb5578c5170ca1.stex" ]
 
 [params]
 

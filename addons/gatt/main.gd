@@ -1,3 +1,4 @@
+tool
 extends PanelContainer
 
 export (NodePath) var floor_maker_path: NodePath
@@ -46,11 +47,13 @@ var _current_grid_mode = DataDb.TileTemplate.GRID_MODE.MODE_2X2
 var _preview_guide_file: bool = true
 
 func _ready():
+	print("ready")
 	_reset_defaults_for_controls()
 	_capture_settings()
 	generate_and_display()
 	_floor_maker.connect("new_floor_tile", self, "_on_FloorMaker_new_floor_tile")
 	_floor_maker.block_size = _block_dimensions
+	get_parent().connect("resized", self, "_on_main_resized")
 	
 func _reset_defaults_for_controls()->void:
 	_size_control.value = _block_dimensions
@@ -154,6 +157,7 @@ func _on_ErrorPopupCloseButton_pressed():
 	$ErrorPopup.hide()
 
 func _on_SaveButton_pressed():
+	print("Opening dialog")
 	$SaveDialog.current_file = "template.png"
 	saving_guide = false
 	$SaveDialog.popup_centered_clamped()
@@ -205,3 +209,6 @@ func _on_TemplateTypeOptionButton_item_selected(index):
 
 func _on_FloorMaker_new_floor_tile(_floor_tile_image: Image)->void:
 	generate_and_display()
+
+func _on_main_resized()->void:
+	rect_size = get_parent().rect_size

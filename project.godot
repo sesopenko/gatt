@@ -72,7 +72,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "DataDb",
 "language": "GDScript",
-"path": "res://scripts/data_db.gd"
+"path": "res://addons/gatt/scripts/data_db.gd"
 }, {
 "base": "ValueProvider",
 "class": "DefaultValueProvider",
@@ -87,7 +87,7 @@ _global_script_classes=[ {
 "base": "VBoxContainer",
 "class": "FloorMaker",
 "language": "GDScript",
-"path": "res://scenes/floor_maker.gd"
+"path": "res://addons/gatt/scenes/floor_maker.gd"
 }, {
 "base": "Resource",
 "class": "Fuzzer",
@@ -862,19 +862,19 @@ _global_script_class_icons={
 
 config/name="GATT"
 config/description="Godot Autotile Texture Templater (GATT)"
-run/main_scene="res://main.tscn"
+run/main_scene="res://app.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="GATT"
 config/icon="res://icon.png"
 
 [display]
 
-window/size/width=1280
-window/size/height=720
+window/size/width=900
+window/size/height=838
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/gdUnit3/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/gatt/plugin.cfg", "res://addons/gdUnit3/plugin.cfg" )
 
 [gui]
 

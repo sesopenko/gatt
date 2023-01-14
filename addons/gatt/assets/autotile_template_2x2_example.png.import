@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/autotile_template_2x2_example.png-0d1925ca3dd58dcb6ddfe98a5ac85231.stex"
+path="res://.import/autotile_template_2x2_example.png-c1992bfbe5da4f40e80216a42d15bb5d.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/autotile_template_2x2_example.png"
-dest_files=[ "res://.import/autotile_template_2x2_example.png-0d1925ca3dd58dcb6ddfe98a5ac85231.stex" ]
+source_file="res://addons/gatt/assets/autotile_template_2x2_example.png"
+dest_files=[ "res://.import/autotile_template_2x2_example.png-c1992bfbe5da4f40e80216a42d15bb5d.stex" ]
 
 [params]
 

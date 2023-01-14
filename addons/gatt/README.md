@@ -24,7 +24,7 @@ The plugin appears in the bottom toolbar.
 
 For more information on autotiles refer to [the documentation](https://docs.godotengine.org/en/stable/tutorials/2d/using_tilemaps.html#autotiles).
 
-![screenshot](addons/gatt/img/preview_screenshot.png)
+![screenshot](img/preview_screenshot.png)
 
 ## Relevant Documentation
 

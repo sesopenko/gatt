@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://scenes/copyright.gd" type="Script" id=1]
+[ext_resource path="res://addons/gatt/scenes/copyright.gd" type="Script" id=1]
 
 [node name="Copyright" type="Label"]
 margin_right = 40.0
