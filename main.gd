@@ -1,5 +1,6 @@
 extends PanelContainer
 
+export (NodePath) var floor_maker_path: NodePath
 
 export (NodePath) var final_image_display_path: NodePath
 export (NodePath) var size_control_path: NodePath
@@ -15,7 +16,7 @@ export (NodePath) var current_grid_mode_path: NodePath
 
 export (NodePath) var final_label_path: NodePath
 
-
+onready var _floor_maker: FloorMaker = get_node(floor_maker_path) as FloorMaker
 onready var _final_image_control: TextureRect = get_node(final_image_display_path) as TextureRect
 onready var _size_control: SpinBox = get_node(size_control_path) as SpinBox
 onready var _border_width_control: SpinBox = get_node(border_width_path) as SpinBox
@@ -29,7 +30,6 @@ onready var _grid_mode_control: OptionButton = get_node(current_grid_mode_path) 
 
 onready var _final_label_control: Label = get_node(final_label_path) as Label
 
-var _floor_colour: Color
 var _wall_colour: Color
 var _border_colour: Color
 var _side_wall_colour: Color
@@ -51,13 +51,13 @@ func _ready():
 	_reset_defaults_for_controls()
 	_capture_settings()
 	generate_and_display()
+	_floor_maker.connect("new_floor_tile", self, "_on_FloorMaker_new_floor_tile")
 	
 func _reset_defaults_for_controls()->void:
 	_size_control.value = _block_dimensions
 	_grid_mode_control.selected = _current_grid_mode
 	
 func _capture_settings()->void:
-	_floor_colour = _floor_colour_control.get_picker().color
 	_wall_colour = _wall_colour_control.get_picker().color
 	_border_colour = _border_colour_control.get_picker().color
 	_side_wall_colour = _side_wall_colour_control.get_picker().color
@@ -118,7 +118,17 @@ func _generate_and_display_with_db(grid_mode: int)->void:
 func _prep_images_for_template(tile_template: DataDb.TileTemplate)->void:
 	var dimensions = tile_template.get_image_dimensions()
 	_rendered_template.create(dimensions.x, dimensions.y, false, Image.FORMAT_RGBA8)
-	_rendered_template.fill(_floor_colour)
+	var floor_tile_image = _floor_maker.get_floor_tile_image()
+	if floor_tile_image and floor_tile_image.get_width() > 0:
+		pass
+		for y in floor(_rendered_template.get_height() / _block_dimensions) as int:
+			for x in floor(_rendered_template.get_width() / _block_dimensions) as int:
+				var offset := Vector2(
+					x * _block_dimensions,
+					y * _block_dimensions
+				)
+				var floor_rect := Rect2(Vector2(0, 0), Vector2(_block_dimensions, _block_dimensions))
+				_rendered_template.blit_rect(floor_tile_image, floor_rect, offset)
 	_rendered_guide.create(dimensions.x, dimensions.y, false, Image.FORMAT_RGBA8)
 					
 func _update_subtile_helper(subtile_size: int)->void:
@@ -137,6 +147,7 @@ func merge_images_and_display(tile_template: DataDb.TileTemplate)->void:
 		# blend this on top to preview the sub cells.
 		display_img.blend_rect(_rendered_guide, Rect2(0, 0, dimensions.x, dimensions.y), Vector2(0, 0))
 	var display_texture = ImageTexture.new()
+	display_texture.flags = display_texture.flags & (~Texture.FLAG_FILTER)
 	display_texture.create_from_image(display_img)
 	_final_image_control.texture = display_texture
 
@@ -190,4 +201,8 @@ func _on_github_pressed():
 
 func _on_TemplateTypeOptionButton_item_selected(index):
 	_current_grid_mode = index
+	generate_and_display()
+
+
+func _on_FloorMaker_new_floor_tile(_floor_tile_image: Image)->void:
 	generate_and_display()

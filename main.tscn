@@ -4,12 +4,13 @@
 [ext_resource path="res://assets/autotile_template_2x2_example.png" type="Texture" id=2]
 [ext_resource path="res://scenes/save_dialog.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/copyright.tscn" type="PackedScene" id=4]
-[ext_resource path="res://assets/block_preview_placeholder.png" type="Texture" id=5]
+[ext_resource path="res://scenes/floor_maker.tscn" type="PackedScene" id=5]
 
 [node name="Main" type="PanelContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
+floor_maker_path = NodePath("MarginContainer/VBoxContainer/AppContainer/BlockRenderContainer/FloorMaker")
 final_image_display_path = NodePath("MarginContainer/VBoxContainer/AppContainer/AutotileTemplateContainer/FinalImageContainer/AutotileTemplateScrollContainer/FinalImage")
 size_control_path = NodePath("MarginContainer/VBoxContainer/AppContainer/BlockSettingsPanel/BlockSettingsHContainer/BlockSettingsGrid/SizeSetting")
 border_width_path = NodePath("MarginContainer/VBoxContainer/AppContainer/BlockSettingsPanel/BlockSettingsHContainer/BlockSettingsGrid/BorderSpinbox")
@@ -92,6 +93,7 @@ margin_right = 362.0
 margin_bottom = 48.0
 min_value = 4.0
 max_value = 256.0
+step = 2.0
 value = 32.0
 rounded = true
 
@@ -214,15 +216,12 @@ margin_left = 380.0
 margin_right = 1266.0
 margin_bottom = 280.0
 
-[node name="BlockScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer/AppContainer/BlockRenderContainer"]
+[node name="FloorMaker" parent="MarginContainer/VBoxContainer/AppContainer/BlockRenderContainer" instance=ExtResource( 5 )]
 margin_right = 886.0
-margin_bottom = 64.0
-rect_min_size = Vector2( 64, 64 )
-
-[node name="BlockImage" type="TextureRect" parent="MarginContainer/VBoxContainer/AppContainer/BlockRenderContainer/BlockScrollContainer"]
-margin_right = 48.0
-margin_bottom = 48.0
-texture = ExtResource( 5 )
+type_option_button_path = NodePath("../../BlockSettingsPanel/BlockSettingsHContainer/BlockSettingsGrid/FloorTypeOption")
+color_picker_1_path = NodePath("../../BlockSettingsPanel/BlockSettingsHContainer/BlockSettingsGrid/FloorColourPicker")
+color_picker_2_path = NodePath("../../BlockSettingsPanel/BlockSettingsHContainer/BlockSettingsGrid/Floor2Picker")
+block_size_path = NodePath("../../BlockSettingsPanel/BlockSettingsHContainer/BlockSettingsGrid/SizeSetting")
 
 [node name="AutotileTemplatePanel" type="PanelContainer" parent="MarginContainer/VBoxContainer/AppContainer"]
 margin_top = 284.0
@@ -360,7 +359,6 @@ text = "Open Github"
 [connection signal="file_selected" from="SaveDialog" to="." method="_on_SaveDialog_file_selected"]
 [connection signal="item_selected" from="MarginContainer/VBoxContainer/AppContainer/BlockSettingsPanel/BlockSettingsHContainer/BlockSettingsGrid/TemplateTypeOptionButton" to="." method="_on_TemplateTypeOptionButton_item_selected"]
 [connection signal="value_changed" from="MarginContainer/VBoxContainer/AppContainer/BlockSettingsPanel/BlockSettingsHContainer/BlockSettingsGrid/SizeSetting" to="." method="_on_SizeSetting_value_changed"]
-[connection signal="color_changed" from="MarginContainer/VBoxContainer/AppContainer/BlockSettingsPanel/BlockSettingsHContainer/BlockSettingsGrid/FloorColourPicker" to="." method="_on_value_changed"]
 [connection signal="color_changed" from="MarginContainer/VBoxContainer/AppContainer/BlockSettingsPanel/BlockSettingsHContainer/BlockSettingsGrid/WallColourPicker" to="." method="_on_value_changed"]
 [connection signal="color_changed" from="MarginContainer/VBoxContainer/AppContainer/BlockSettingsPanel/BlockSettingsHContainer/BlockSettingsGrid/SideWallColourPicker" to="." method="_on_value_changed"]
 [connection signal="value_changed" from="MarginContainer/VBoxContainer/AppContainer/BlockSettingsPanel/BlockSettingsHContainer/BlockSettingsGrid/BorderSpinbox" to="." method="_on_value_changed"]
