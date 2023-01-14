@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/gatt/main.tscn" type="PackedScene" id=1]
+
+[node name="App" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Main" parent="." instance=ExtResource( 1 )]
+margin_right = 0.0
+margin_bottom = 0.0

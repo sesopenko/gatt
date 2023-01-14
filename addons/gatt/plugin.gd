@@ -5,7 +5,7 @@ var gatt_ui: Control
 var control_button: ToolButton
 
 func _enter_tree():
-	gatt_ui = load("res://addons/gatt/main.tscn").instance()
+	gatt_ui = load("res://addons/gatt/tool_window.tscn").instance()
 	control_button = add_control_to_bottom_panel(gatt_ui, "GATT")
 	control_button.show()
 
