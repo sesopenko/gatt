@@ -7,7 +7,6 @@ export (NodePath) var size_control_path: NodePath
 export (NodePath) var border_width_path: NodePath
 export (NodePath) var preview_guide_path: NodePath
 
-export (NodePath) var floor_colour_path: NodePath
 export (NodePath) var wall_colour_path: NodePath
 export (NodePath) var border_colour_path: NodePath
 export (NodePath) var side_wall_colour_path: NodePath
@@ -22,7 +21,6 @@ onready var _size_control: SpinBox = get_node(size_control_path) as SpinBox
 onready var _border_width_control: SpinBox = get_node(border_width_path) as SpinBox
 onready var _preview_guide_control: CheckButton = get_node(preview_guide_path) as CheckButton
 
-onready var _floor_colour_control: ColorPickerButton = get_node(floor_colour_path) as ColorPickerButton
 onready var _wall_colour_control: ColorPickerButton = get_node(wall_colour_path) as ColorPickerButton
 onready var _border_colour_control: ColorPickerButton = get_node(border_colour_path) as ColorPickerButton
 onready var _side_wall_colour_control: ColorPickerButton = get_node(side_wall_colour_path) as ColorPickerButton
@@ -52,6 +50,7 @@ func _ready():
 	_capture_settings()
 	generate_and_display()
 	_floor_maker.connect("new_floor_tile", self, "_on_FloorMaker_new_floor_tile")
+	_floor_maker.block_size = _block_dimensions
 	
 func _reset_defaults_for_controls()->void:
 	_size_control.value = _block_dimensions
@@ -118,7 +117,7 @@ func _generate_and_display_with_db(grid_mode: int)->void:
 func _prep_images_for_template(tile_template: DataDb.TileTemplate)->void:
 	var dimensions = tile_template.get_image_dimensions()
 	_rendered_template.create(dimensions.x, dimensions.y, false, Image.FORMAT_RGBA8)
-	var floor_tile_image = _floor_maker.get_floor_tile_image()
+	var floor_tile_image = _floor_maker.floor_tile_image
 	if floor_tile_image and floor_tile_image.get_width() > 0:
 		pass
 		for y in floor(_rendered_template.get_height() / _block_dimensions) as int:
@@ -183,7 +182,7 @@ func _on_value_changed(value):
 
 func _on_SizeSetting_value_changed(value):
 	_block_dimensions = value as int
-	generate_and_display()
+	_floor_maker.block_size = value
 
 func _on_PreviewBorderCheckbox_pressed():
 	generate_and_display()
